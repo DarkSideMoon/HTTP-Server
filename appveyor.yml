@@ -22,7 +22,7 @@ artifacts:
 deploy:
   description: 'Test release HttpServer'
   provider: GitHub
-    artifact: /.*\.nupkg/           # upload all NuGet packages to release assets
+    artifact: '**\*.nupkg'         # upload all NuGet packages to release assets
     draft: false
     prerelease: false
     on:
