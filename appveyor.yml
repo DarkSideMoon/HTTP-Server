@@ -15,3 +15,6 @@ assembly_info:
 artifacts:
   - path: HTTP-Server\bin\$(configuration)
     name: HTTP-Server
+    
+  - path: HTTP-Server\AssemblyFileVersion.cs
+    name: AssemblyFileVersion
