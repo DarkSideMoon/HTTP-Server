@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTP-Server", "HTTP-Server\HTTP-Server.csproj", "{584A9BA1-DAD1-404B-81B3-12DFFF712210}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTP-Server.Test", "HTTP-Server.Test\HTTP-Server.Test.csproj", "{07A3C293-7E26-4264-8B4A-E143651E6BC9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Artifacts", "Artifacts", "{B07812AD-0F2A-475E-BF1A-4AE3746E9E26}"
+	ProjectSection(SolutionItems) = preProject
+		HTTP-Server\AssemblyFileVersion.cs = HTTP-Server\AssemblyFileVersion.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
