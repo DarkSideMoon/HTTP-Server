@@ -3,3 +3,15 @@ configuration: Debug
 #restore NuGet packages before running MSBuild
 before_build:
   - nuget restore
+
+# enable patching of AssemblyInfo.* files
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "1.0.{build}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+  
+artifacts:
+  - path: HTTP-Server\bin\$(configuration)
+    name: HTTP-Server
