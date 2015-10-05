@@ -2,17 +2,27 @@
 #restore NuGet packages before running MSBuild
 before_build:
   - nuget restore
-  - ps: >-
+- ps: >-
     if($env:APPVEYOR_REPO_BRANCH -eq "master"){
+
     if($env:APPVEYOR_REPO_TAG){
+
     $env:CONFIGURATION = "Release"
+
     Write-Host "Switch to Release configuration"
+
     }
+
     else{
+
     $env:CONFIGURATION = "Debug"
+
     Write-Host "Switch to Debug configuration"
+
     }
+
     }
+
 build:
   verbosity: minimal
 after_build:
