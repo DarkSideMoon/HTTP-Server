@@ -19,11 +19,8 @@ AppVerName={#Name} {#AppVersion}
 AppPublisher={#Publisher}
 DefaultDirName={pf}\{#Name}
 DefaultGroupName={#Name}
-OutputDir=D:\GitHub\Installation
+OutputDir=..\HTTP-Server\HTTP-Server\bin\
 OutputBaseFilename=setup
-
-; Файл иконки
-SetupIconFile=D:\GitHub\Media\web.ico
 
 ; Параметры сжатия
 Compression=lzma
