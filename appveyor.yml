@@ -16,8 +16,8 @@ artifacts:
   - path: HTTP-Server\bin\$(configuration)
     name: HTTP-Server
     
-  - path: HTTP-Server\AssemblyFileVersion.cs
-    name: AssemblyFileVersion
+  #- path: HTTP-Server\AssemblyFileVersion.cs
+  #  name: AssemblyFileVersion
     
-  - path: Artifacts\InstallScript.iss
-    name: InstallScript  
+  #- path: Artifacts\InstallScript.iss
+  #  name: InstallScript  
