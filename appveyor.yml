@@ -2,7 +2,7 @@
 #restore NuGet packages before running MSBuild
 before_build:
   - nuget restore
-- ps: >-
+  - ps: >-
     if($env:APPVEYOR_REPO_BRANCH -eq "master"){
 
     if($env:APPVEYOR_REPO_TAG){
