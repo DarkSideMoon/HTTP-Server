@@ -1,9 +1,10 @@
-configuration: Debug
+configuration: Release
 
 #restore NuGet packages before running MSBuild
 before_build:
   - nuget restore
-
+  
+  
 # enable patching of AssemblyInfo.* files
 assembly_info:
   patch: true
