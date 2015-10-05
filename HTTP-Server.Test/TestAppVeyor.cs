@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace HTTP_Server.Test
+namespace HttpServer.Test
 {
     [TestClass]
     public class TestAppVeyor

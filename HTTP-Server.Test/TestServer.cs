@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace HTTP_Server.Test
+namespace HttpServer.Test
 {
     [TestClass]
     public class TestServer
     {
         [TestMethod, TestCategory("TestServerPOST")]
-        public void TestServerPOST()
+        public void TestServerPost()
         {
         }
     }

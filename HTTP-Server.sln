@@ -7,18 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTP-Server", "HTTP-Server\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTP-Server.Test", "HTTP-Server.Test\HTTP-Server.Test.csproj", "{07A3C293-7E26-4264-8B4A-E143651E6BC9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{369F20EF-16DB-4DCE-975C-9DE4C31741A3}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82B6EF2F-2529-4C28-B9BD-74D88BCDF349}"
 	ProjectSection(SolutionItems) = preProject
-		HTTP-Server\AssemblyFileVersion.cs = HTTP-Server\AssemblyFileVersion.cs
-		Artifacts\InstallScript.iss = Artifacts\InstallScript.iss
+		AssemblyInfoVersion.cs = AssemblyInfoVersion.cs
 	EndProjectSection
 EndProject
 Global
