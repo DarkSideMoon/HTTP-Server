@@ -1,7 +1,3 @@
-;------------------------------------------------------------------------------
-;   Определяем некоторые константы
-;------------------------------------------------------------------------------
-                                          
 #define Dir "..\HTTP-Server\HTTP-Server\bin\Release"
 #define Path "..\HTTP-Server\HTTP-Server\bin\Release\HTTP-Server.exe"
 #define PathToNet "D:\GitHub\InstallationScripts\"
@@ -12,31 +8,19 @@
 #define URL "https://github.com/DarkSideMoon"
 #define GUID "F829E35A-E5AB-4ACB-8A32-3DA72881CBBF"
 
-;------------------------------------------------------------------------------
-;   Параметры установки
-;------------------------------------------------------------------------------
-
 [Setup]
-; Уникальный идентификатор приложения, 
-;сгенерированный через Tools -> Generate GUID
-AppId={{F829E35A-E5AB-4ACB-8A32-3DA72881CBBF}
-
-; Прочая информация, отображаемая при установке
+; NOTE: The value of AppId uniquely identifies this application.
+; Do not use the same AppId value in installers for other applications.
+; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
+AppId={#GUID}
 AppName={#Name}
 AppVersion={#AppVersion}
+AppVerName={#Name} {#AppVersion}
 AppPublisher={#Publisher}
-AppPublisherURL={#URL}
-AppSupportURL={#URL}
-AppUpdatesURL={#URL}
-
-; Путь установки по-умолчанию
 DefaultDirName={pf}\{#Name}
-; Имя группы в меню "Пуск"
 DefaultGroupName={#Name}
-
-; Каталог, куда будет записан собранный setup и имя исполняемого файла
 OutputDir=D:\GitHub\Installation
-OutputBaseFileName=Installation
+OutputBaseFilename=setup
 
 ; Файл иконки
 SetupIconFile=D:\GitHub\Media\web.ico
@@ -45,24 +29,12 @@ SetupIconFile=D:\GitHub\Media\web.ico
 Compression=lzma
 SolidCompression=yes
 
-;------------------------------------------------------------------------------
-;   Устанавливаем языки для процесса установки
-;------------------------------------------------------------------------------
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"; LicenseFile: "License_ENG.txt"
-Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"; LicenseFile: "License_RUS.txt"
-;------------------------------------------------------------------------------
-;   Опционально - некоторые задачи, которые надо выполнить при установке
-;------------------------------------------------------------------------------
+Name: "english"; MessagesFile: "compiler:Default.isl";
 
 [Tasks]
-; Создание иконки на рабочем столе
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-
-;------------------------------------------------------------------------------
-;   Файлы, которые надо включить в пакет установщика
-;------------------------------------------------------------------------------
 
 [Files]
 ; Исполняемый файл
@@ -71,22 +43,14 @@ Source: "{#Path}"; DestDir: "{app}"; Flags: ignoreversion
 ; Прилагающиеся ресурсы
 Source: "{#Dir}*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-; .NET Framework 4.0
-;Source: "D:\GitHub\InstallationScripts\dotNetFx45_Full_setup.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall; Check: not IsRequiredDotNetDetected
 
-;------------------------------------------------------------------------------
-;   Указываем установщику, где он должен взять иконки
-;------------------------------------------------------------------------------ 
 [Icons]
-
 Name: "{group}\{#Name}"; Filename: "{app}\{#ExeName}"
-
 Name: "{commondesktop}\{#Name}"; Filename: "{app}\{#ExeName}"; Tasks: desktopicon
 
-;------------------------------------------------------------------------------
-;   Секция кода включенная из отдельного файла
-;------------------------------------------------------------------------------
-[Code]
+[Run]
+Filename: "{app}\{#ExeName}"; Description: "{cm:LaunchProgram,{#StringChange(Name, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+
 [Code]
 function isDotNetDetected(): Boolean;
 var
@@ -149,9 +113,3 @@ begin
 
   result := true;
 end;
-[Run]
-;------------------------------------------------------------------------------
-;   Секция запуска после инсталляции
-;------------------------------------------------------------------------------
-Filename: "{app}\{#ExeName}"; Parameters: "/q:a /c:""install /l /q"""; Flags: nowait postinstall skipifsilent
-;Check: not IsRequiredDotNetDetected; StatusMsg: Microsoft Framework 4.0 is installed. Please wait.
