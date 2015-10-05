@@ -25,5 +25,10 @@ namespace HttpServer
         {
             InitializeComponent();
         }
+
+        private void MainGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }
