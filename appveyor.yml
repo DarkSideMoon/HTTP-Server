@@ -4,7 +4,7 @@ before_build:
 build:
   verbosity: minimal
 after_build:
-- cmd: "if %APPVEYOR_REPO_BRANCH% == master "D:\GitHub\HTTP-Server\packages\Tools.InnoSetup.5.5.6\tools\ISCC.exe" "D:\GitHub\HTTP-Server\InstallScript.iss""
+- cmd: if %APPVEYOR_REPO_BRANCH% == master "D:\GitHub\HTTP-Server\packages\Tools.InnoSetup.5.5.6\tools\ISCC.exe" "D:\GitHub\HTTP-Server\InstallScript.iss"
   
 # enable patching of AssemblyInfo.* files
 assembly_info:
