@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("HTTP-Server")]
+[assembly: AssemblyTitle("Http-server")]
 [assembly: AssemblyDescription("Simple web http server")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
