@@ -1,9 +1,22 @@
-configuration: Release
 
 #restore NuGet packages before running MSBuild
 before_build:
   - nuget restore
-  
+  - ps: >-
+    if($env:APPVEYOR_REPO_BRANCH -eq "master"){
+    if($env:APPVEYOR_REPO_TAG){
+    $env:CONFIGURATION = "Release"
+    Write-Host "Switch to Release configuration"
+    }
+    else{
+    $env:CONFIGURATION = "Debug"
+    Write-Host "Switch to Debug configuration"
+    }
+    }
+build:
+  verbosity: minimal
+after_build:
+- cmd: "if %APPVEYOR_REPO_BRANCH% == master \n\"D:\\GitHub\\HTTP-Server\\packages\\Tools.InnoSetup.5.5.6\\tools\\ISCC.exe\" \n\"D:\\GitHub\\HTTP-Server\\InstallScript.iss\""
   
 # enable patching of AssemblyInfo.* files
 assembly_info:
@@ -17,8 +30,3 @@ artifacts:
   - path: HTTP-Server\bin\$(configuration)
     name: HTTP-Server
     
-  #- path: HTTP-Server\AssemblyFileVersion.cs
-  #  name: AssemblyFileVersion
-    
-  #- path: Artifacts\InstallScript.iss
-  #  name: InstallScript  
