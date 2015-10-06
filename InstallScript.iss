@@ -1,5 +1,5 @@
 #define Dir "..\HTTP-Server\HTTP-Server\bin\Release"
-#define Path "..\HTTP-Server\HTTP-Server\bin\Release\HTTP-Server.exe"
+#define Path "..\HTTP-Server\bin\Release\HTTP-Server.exe"
 #define PathToNet "D:\GitHub\InstallationScripts\"
 ;#define Name GetStringFileInfo(Path, "AssemblyProduct")
 #define Name "http"
