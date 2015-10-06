@@ -7,7 +7,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Http-server")]
 [assembly: AssemblyDescription("Simple web http server")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("SoftService")]
 [assembly: AssemblyProduct("HTTP-Server")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]

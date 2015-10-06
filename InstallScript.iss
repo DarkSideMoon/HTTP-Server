@@ -1,12 +1,12 @@
 #define Dir "..\HTTP-Server\HTTP-Server\bin\Release"
 #define Path "..\HTTP-Server\HTTP-Server\bin\Release\HTTP-Server.exe"
 #define PathToNet "D:\GitHub\InstallationScripts\"
-#define Name GetStringFileInfo(Path, "ProductName")
-#define Publisher GetStringFileInfo(Path, "CompanyName")
+#define Name GetStringFileInfo(Path, "AssemblyProduct")
+#define Publisher GetStringFileInfo(Path, "AssemblyCompany")
 #define ExeName Name + ".exe"     
 #define AppVersion GetFileVersion(Path)
 #define URL "https://github.com/DarkSideMoon"
-#define GUID "F829E35A-E5AB-4ACB-8A32-3DA72881CBBF"
+#define GUID "0FC2C860-6984-4CD6-A216-133D90B8C305"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
