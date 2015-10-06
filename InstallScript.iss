@@ -19,7 +19,7 @@ AppVerName={#Name} {#AppVersion}
 AppPublisher={#Publisher}
 DefaultDirName={pf}\{#Name}
 DefaultGroupName={#Name}
-OutputDir=..\HTTP-Server\HTTP-Server\bin\
+OutputDir=..\http-server\HTTP-Server\bin\
 OutputBaseFilename=setup
 
 ; Параметры сжатия
