@@ -24,11 +24,23 @@ namespace HttpServer
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += delegate { Initialize(); };
+        }
+
+        private void Initialize()
+        {
+            foreach (var item in HttpServer.Library.Server.GetLocalHosts)
+                listHosts.Items.Add(item.ToString());
         }
 
         private void MainGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            HttpServer.Library.Server.Start();
         }
     }
 }

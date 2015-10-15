@@ -53,9 +53,9 @@
         <TextBlock HorizontalAlignment="Left" Margin="135,0,0,74" TextWrapping="Wrap" 
                    Foreground="#d51117" FontSize="18" Text="Adrin"
                    VerticalAlignment="Bottom" FontWeight="Medium" Height="24" Width="45"/>
-        <TextBlock HorizontalAlignment="Left" Margin="183,0,0,74" TextWrapping="Wrap" 
+        <TextBlock HorizontalAlignment="Left" Margin="183,0,0,73.8" TextWrapping="Wrap" 
         	Foreground="Gray" FontSize="18" Text="server"
-        	VerticalAlignment="Bottom" FontWeight="Medium" Height="24" Width="50"/>
+        	VerticalAlignment="Bottom" FontWeight="Medium" Height="24" Width="60"/>
 
         <!--Подтягиваеться с ассембли инфо-->
         <TextBlock HorizontalAlignment="Left" Margin="135,0,0,50" TextWrapping="Wrap" 
@@ -78,9 +78,10 @@
         	Foreground="Gray" FontSize="16" Text="Configuration"
         	VerticalAlignment="Bottom" FontWeight="Medium" Grid.Row="1" Height="21" Width="101"/>
 
-        <StackPanel Margin="423,0,24,10" Orientation="Horizontal" Grid.Row="1" Height="18" VerticalAlignment="Bottom">
-            <Button Content="Start" HorizontalAlignment="Left" Style="{StaticResource basicButton}" VerticalAlignment="Top" Width="60"/>
+        <StackPanel Margin="358,0,23.6,10.2" Orientation="Horizontal" Grid.Row="1" Height="18" VerticalAlignment="Bottom">
+            <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Style="{StaticResource basicButton}" VerticalAlignment="Top" Width="60" Click="btnStart_Click"/>
             <Button Content="Stop" HorizontalAlignment="Left" Style="{StaticResource basicButton}" Margin="10,0,0,0" VerticalAlignment="Top" Width="60"/>
+            <Button Content="Console" HorizontalAlignment="Left" Style="{StaticResource basicButton}" Margin="10,0,0,0" VerticalAlignment="Top" Width="60"/>
         </StackPanel>
 
         <StackPanel Margin="0,0,323,46" Orientation="Horizontal" Grid.Row="1" Height="30" VerticalAlignment="Bottom">
@@ -115,6 +116,11 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,5,0,0" TextWrapping="Wrap" 
         	Foreground="Gray" FontSize="16" Text="Server request" FontWeight="Medium" Grid.Row="3"  VerticalAlignment="Top" Height="21" Width="127"/>
         <ListBox HorizontalAlignment="Left" Height="78" Margin="10,31,0,0" Grid.Row="3" VerticalAlignment="Top" Width="566"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="252,4.8,0,0" TextWrapping="Wrap" 
+        	Foreground="Gray" FontSize="16" Text="Local hosts" FontWeight="Medium" Grid.Row="2" Width="86" Height="27" VerticalAlignment="Top"/>
+        
+        <ListBox x:Name="listHosts" HorizontalAlignment="Left" Height="66" Margin="358,4.8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="218"/>
 
         <!--Fourth block-->
 

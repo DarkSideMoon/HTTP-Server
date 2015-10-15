@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HTTP-Server.Library">
+      <HintPath>..\HTTP-Server.Library\bin\Debug\HTTP-Server.Library.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>

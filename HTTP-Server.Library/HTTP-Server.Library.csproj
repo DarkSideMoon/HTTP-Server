@@ -42,7 +42,7 @@
     <Compile Include="..\AssemblyInfoVersion.cs">
       <Link>Properties\AssemblyInfoVersion.cs</Link>
     </Compile>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Server.cs" />
     <Compile Include="Logger\Log.cs" />
     <Compile Include="Logger\MessageLogger.cs" />
     <Compile Include="Logger\RequestLogger.cs" />

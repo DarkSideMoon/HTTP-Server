@@ -71,6 +71,9 @@
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HTTP-Server.Library">
+      <HintPath>..\HTTP-Server.Library\bin\Debug\HTTP-Server.Library.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework.Classic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -121,10 +124,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <None Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="CodeAnalysisRules.ruleset" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
