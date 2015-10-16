@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,5 +29,7 @@ namespace HttpServer.Library.Logger
         public abstract void WriteMessage(Exception message, MessageType type);
 
         public abstract void WriteMessage(string message, MessageType type);
+
+        public abstract void WriteMessage(HttpListenerRequest request);
     }
 }

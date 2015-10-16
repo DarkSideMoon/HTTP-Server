@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HttpServer.Library.Logger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -15,6 +16,9 @@ namespace HttpServer.Library
         private static HttpListener listener;
         private static Semaphore sem = new Semaphore(MaxSimultaneousConnections, MaxSimultaneousConnections);
 
+        private static RequestLogger _logger = new RequestLogger("RequestLogger");
+        private State _state;
+
         public static List<IPAddress> GetLocalHosts
         {
             get { return GetLocalHostIPs(); }
@@ -23,6 +27,12 @@ namespace HttpServer.Library
         public static bool IsStarted
         {
             get { return listener.IsListening; }
+        }
+
+        public State State
+        {
+            get { return _state; }
+            set { _state = value; }
         }
 
         /// <summary>
@@ -64,6 +74,10 @@ namespace HttpServer.Library
         {
             // Wait for a connection. Return to caller while we wait.
             HttpListenerContext context = await listener.GetContextAsync();
+
+            var res = context.Request;
+            // Write to logger the request 
+            _logger.WriteMessage(context.Request);
 
             // Release the semaphore so that another listener can be immediately started up.
             sem.Release();

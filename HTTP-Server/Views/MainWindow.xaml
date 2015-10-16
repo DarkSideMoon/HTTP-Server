@@ -49,7 +49,7 @@
         </Grid.RowDefinitions>
 
         <!--First block-->
-        <Image HorizontalAlignment="Left" Margin="10,-6,0,11" Width="112" Source="Images/Adrin.png" Height="100" VerticalAlignment="Bottom"/>
+        <Image HorizontalAlignment="Left" Margin="10,-6,0,11" Width="112" Source="../Images/Adrin.png" Height="100" VerticalAlignment="Bottom"/>
         <TextBlock HorizontalAlignment="Left" Margin="135,0,0,74" TextWrapping="Wrap" 
                    Foreground="#d51117" FontSize="18" Text="Adrin"
                    VerticalAlignment="Bottom" FontWeight="Medium" Height="24" Width="45"/>
@@ -66,7 +66,7 @@
         	VerticalAlignment="Bottom" Width="107" Height="19" />
         <Button HorizontalAlignment="Left" Style="{StaticResource basicButton}" Background="Transparent" Margin="536,10,0,0" 
                 VerticalAlignment="Top" Width="40" Height="40">
-            <Image Source="Images/close.png"/>
+            <Image Source="../Images/close.png"/>
         </Button>
 
 
@@ -104,7 +104,8 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,5,0,0" TextWrapping="Wrap" 
         	Foreground="Gray" FontSize="16" Text="Server state" FontWeight="Medium" Grid.Row="2" Width="86" Height="27" VerticalAlignment="Top"/>
 
-        <Image HorizontalAlignment="Left" Height="60" Margin="107,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="60" Source="Images/ServerStatus/ok.png"/>
+        <Image HorizontalAlignment="Left" Height="60" Margin="107,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="60" 
+               Source="../Images/ServerStatus/ok.png"/>
 
         <TextBlock Foreground="Gray" FontSize="14" HorizontalAlignment="Left" Margin="172,31,0,0" Grid.Row="2" TextWrapping="Wrap" 
                    Text="Is running" VerticalAlignment="Top" Height="19" Width="62"/>

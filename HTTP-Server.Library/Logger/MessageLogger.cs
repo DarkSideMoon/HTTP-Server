@@ -72,5 +72,10 @@ namespace HttpServer.Library.Logger
                     writer.Close();
             }
         }
+
+        public override void WriteMessage(System.Net.HttpListenerRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

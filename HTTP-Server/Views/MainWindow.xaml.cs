@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HttpServer.Library;
 
 namespace HttpServer
 {
@@ -29,7 +30,7 @@ namespace HttpServer
 
         private void Initialize()
         {
-            foreach (var item in HttpServer.Library.Server.GetLocalHosts)
+            foreach (var item in Server.GetLocalHosts)
                 listHosts.Items.Add(item.ToString());
         }
 
@@ -40,7 +41,7 @@ namespace HttpServer
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            HttpServer.Library.Server.Start();
+            Server.Start();
         }
     }
 }
