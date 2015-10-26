@@ -39,7 +39,7 @@ namespace HttpServer
             this.DragMove();
         }
 
-        private void btnStart_Click(object sender, RoutedEventArgs e)
+        private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
             Server.Start();
         }

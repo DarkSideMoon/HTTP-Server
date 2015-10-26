@@ -1,5 +1,4 @@
-﻿using HttpServer.Library.StateServer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,26 +16,26 @@ namespace HttpServer.Library
 
         public Server Server
         {
-            get { return _server; }
-            set { _server = value; }
+            get { return this._server; }
+            set { this._server = value; }
         }
 
         public int CodeState
         {
-            get { return _codeState; }
-            set { _codeState = value; }
+            get { return this._codeState; }
+            set { this._codeState = value; }
         }
 
         public string DescriptionState
         {
-            get { return _descState; }
-            set { _descState = value; }
+            get { return this._descState; }
+            set { this._descState = value; }
         }
 
         public string Response
         {
-            get { return _response; }
-            set { _response = value; }
+            get { return this._response; }
+            set { this._response = value; }
         }
     }
 }

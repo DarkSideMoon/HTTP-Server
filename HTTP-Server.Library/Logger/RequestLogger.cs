@@ -94,8 +94,7 @@ namespace HttpServer.Library.Logger
                     writer.BaseStream.Seek(0, SeekOrigin.End);
 
                     // [DateTime] [error/warn] [client 127.0.0.1] 200 (code) - "Url" - "Info system"
-
-                    string body = string.Format("[" + this.DateTimeLog + "]" 
+                    string body = string.Format("[" + this.DateTimeLog + "]"
                                                 + "[Host: " + request.Url.Host +"]"
                                                 + "[HostNameType: " + request.Url.HostNameType + "]"
                                                 + "[" + request.HttpMethod + "]"

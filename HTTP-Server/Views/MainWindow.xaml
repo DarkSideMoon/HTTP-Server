@@ -79,7 +79,7 @@
         	VerticalAlignment="Bottom" FontWeight="Medium" Grid.Row="1" Height="21" Width="101"/>
 
         <StackPanel Margin="358,0,23.6,10.2" Orientation="Horizontal" Grid.Row="1" Height="18" VerticalAlignment="Bottom">
-            <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Style="{StaticResource basicButton}" VerticalAlignment="Top" Width="60" Click="btnStart_Click"/>
+            <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Style="{StaticResource basicButton}" VerticalAlignment="Top" Width="60" Click="BtnStart_Click"/>
             <Button Content="Stop" HorizontalAlignment="Left" Style="{StaticResource basicButton}" Margin="10,0,0,0" VerticalAlignment="Top" Width="60"/>
             <Button Content="Console" HorizontalAlignment="Left" Style="{StaticResource basicButton}" Margin="10,0,0,0" VerticalAlignment="Top" Width="60"/>
         </StackPanel>
