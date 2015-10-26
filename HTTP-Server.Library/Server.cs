@@ -42,6 +42,9 @@ namespace HttpServer.Library
         public int ExpirationTimeSeconds { get; set; }
         public string ValidationTokenName { get; set; }
 
+        /// <summary>
+        /// State of the server
+        /// </summary>
         public State State
         {
             get { return this._state; }

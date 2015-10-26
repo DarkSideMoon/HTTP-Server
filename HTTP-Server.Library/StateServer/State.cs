@@ -37,5 +37,17 @@ namespace HttpServer.Library
             get { return this._response; }
             set { this._response = value; }
         }
+
+        internal virtual void HandleStateServer(Server server)
+        {
+            this.ChangeState(server);
+        }
+
+        /// <summary>
+        /// Return the response of the state of server
+        /// </summary>
+        protected abstract void GetResponse();
+
+        protected abstract void ChangeState(Server server);
     }
 }
