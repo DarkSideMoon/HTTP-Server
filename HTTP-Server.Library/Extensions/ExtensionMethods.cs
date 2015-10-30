@@ -9,11 +9,6 @@ namespace HttpServer.Library
 {
     public static class ExtensionMethods
     {
-        public static string RightOf(this string src, char c)
-        {
-            return StringHelpers.RightOf(src, c);
-        }
-
         public static string RightOf(this string src, string s)
         {
             string ret = string.Empty;
@@ -23,11 +18,6 @@ namespace HttpServer.Library
                 ret = src.Substring(idx + s.Length);
 
             return ret;
-        }
-
-         public static string LeftOf(this string src, char c)
-        {
-            return StringHelpers.LeftOf(src, c);
         }
 
         public static string LeftOf(this string src, string s)

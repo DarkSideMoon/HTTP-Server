@@ -96,55 +96,7 @@ namespace HttpServer.Library
 
             // Release the semaphore so that another listener can be immediately started up.
             sem.Release();
-
-            try
-            {
-                HttpListenerRequest request = context.Request;
-                string path = request.RawUrl.LeftOf("?"); // Only the path, not any of the parameters
-                string verb = request.HttpMethod; // get, post, delete, etc.
-                string parms = request.RawUrl.RightOf("?"); // Params on the URL itself follow the URL and are separated by a ?
-                Dictionary<string, object> keyValueParams = GetKeyValues(parms); // Extract into key-value entries.
-
-                string data = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding).ReadToEnd();
-                GetKeyValues(data, keyValueParams);
-                //Log(kvParams);
-
-                //if (!VerifyCsrf(session, verb, kvParams))
-                //{
-                //    Console.WriteLine("CSRF did not match.  Terminating connection.");
-                //    context.Response.OutputStream.Close();
-                //}
-                //else
-                //{
-                //    resp = router.Route(session, verb, path, kvParams);
-
-                //    // Update session last connection after getting the response, as the router itself validates session
-                //      expiration only on pages requiring authentication.
-                //    session.UpdateLastConnectionTime();
-
-                //    if (resp.Error != ServerError.OK)
-                //    {
-                //        resp.Redirect = OnError(resp.Error);
-                //    }
-
-                //    // TODO: Nested exception: is this best?
-
-                //    try
-                //    {
-                //        Respond(request, context.Response, resp);
-                //    }
-                //    catch (Exception reallyBadException)
-                //    {
-                //        // The response failed!
-                //        // TODO: We need to put in some decent logging!
-                //        Console.WriteLine(reallyBadException.Message);
-                //    }
-                //}
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            HttpListenerRequest request = context.Request;
 
             // We have a connection, do something...
             string response = "Hello Browser!";
@@ -153,31 +105,6 @@ namespace HttpServer.Library
             context.Response.OutputStream.Write(encoded, 0, encoded.Length);
             context.Response.OutputStream.Close();
         }
-
-        ///// <summary>
-        ///// If a CSRF validation token exists, verify it matches our session value.
-        ///// If one doesn't exist, issue a warning to the console.
-        ///// </summary>
-        //private bool VerifyCsrf(Session session, string verb, Dictionary<string, object> kvParams)
-        //{
-        //    bool ret = true;
-
-        //    if (verb.ToLower() != "get")
-        //    {
-        //        object token;
-
-        //        if (kvParams.TryGetValue(ValidationTokenName, out token))
-        //        {
-        //            ret = session[ValidationTokenName].ToString() == token.ToString();
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("Warning - CSRF token is missing.  Consider adding it to the request.");
-        //        }
-        //    }
-
-        //    return ret;
-        //}
 
         private static List<IPAddress> GetLocalHostIPs()
         {
@@ -198,19 +125,6 @@ namespace HttpServer.Library
                 });
 
             return listener;
-        }
-
-        /// <summary>
-        /// Separate out key-value pairs, delimited by & and into individual key-value instances, separated by =
-        /// Ex input: username=abc&password=123
-        /// </summary>
-        private static Dictionary<string, object> GetKeyValues(string data, Dictionary<string, object> kv = null)
-        {
-            kv.IfNull(() => kv = new Dictionary<string, object>());
-            data.If(d => d.Length > 0, (d) =>
-                d.Split('&').ForEach(keyValue => kv[keyValue.LeftOf('=')] = System.Uri.UnescapeDataString(keyValue.RightOf('='))));
-
-            return kv;
         }
     }
 }
