@@ -1,0 +1,18 @@
+State server folder:
+Description:
+State server folder is contain implementation of State pattern using C#.
+Server has different states. Each of states return a respond to client about server.
+Classes:
+- HttpClose
+- HttpError
+- HttpEstablished
+- HttpListen
+- State
+
+
+Response builder folder:
+Description:
+Folder is cointain implementation of builder pattern using C#.
+Abstract class ResponseBuilder give example how to implements other clases. 
+State server using response builder to make a response clients on request
+Classes:

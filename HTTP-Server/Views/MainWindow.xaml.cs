@@ -13,8 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using HttpServer.Library;
 using System.Threading;
+using HttpServer.Library;
 
 namespace HttpServer
 {
@@ -23,6 +23,7 @@ namespace HttpServer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Server _server;
         public MainWindow()
         {
             InitializeComponent();
@@ -41,11 +42,17 @@ namespace HttpServer
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
-            int MaxThreadsCount = Environment.ProcessorCount * 4;
-            ThreadPool.SetMaxThreads(MaxThreadsCount, MaxThreadsCount);
+            int maxThreadsCount = Environment.ProcessorCount * 4;
+            ThreadPool.SetMaxThreads(maxThreadsCount, maxThreadsCount);
             ThreadPool.SetMinThreads(2, 2);
 
-            new Server(80);
+            Thread thread = new Thread(new ParameterizedThreadStart(StartServer));
+            thread.Start(80);
+        }
+
+        private void StartServer(object port)
+        {
+            this._server = new Server((int)port);
         }
 
         private void listHosts_SelectionChanged(object sender, SelectionChangedEventArgs e)

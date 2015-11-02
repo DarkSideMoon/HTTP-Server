@@ -44,6 +44,10 @@
     </Compile>
     <Compile Include="Client.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
+    <Compile Include="ResponseServer\ErrorBuilder.cs" />
+    <Compile Include="ResponseServer\Response.cs" />
+    <Compile Include="ResponseServer\ResponseBuilder.cs" />
+    <Compile Include="ResponseServer\ResponseDirector.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Logger\Log.cs" />
     <Compile Include="Logger\MessageLogger.cs" />
@@ -58,6 +62,7 @@
   <ItemGroup>
     <None Include="StateServer\StateClassDiagram.cd" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

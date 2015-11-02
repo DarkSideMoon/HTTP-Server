@@ -40,17 +40,19 @@ namespace HttpServer.Library
 
             // Get new client
             TcpClient client = this._listener.AcceptTcpClient();
-            this.SetConsoleColor(ConsoleColor.Blue);
-            Console.WriteLine("New client connected! Address: " + client.Client.LocalEndPoint.ToString());
+
+            this.SetConsoleColor(ConsoleColor.Green);
+            Console.WriteLine("The server is started! Address: " + client.Client.LocalEndPoint.ToString());
             this.ResetConsoleColor();
-  
              while (true)
-                  ThreadPool.QueueUserWorkItem(new WaitCallback(ClientThread), _listener.AcceptTcpClient());
+                  ThreadPool.QueueUserWorkItem(new WaitCallback(ClientThread), this._listener.AcceptTcpClient());
 
             // Create new thread
             //Thread thread = new Thread(new ParameterizedThreadStart(ClientThread));
             // Start new thread with getting client
             //thread.Start(client);
+
+            //thread.Join();
         }
 
         // Остановка сервера

@@ -27,7 +27,6 @@ namespace HttpServer.Library
             }
             // Парсим строку запроса с использованием регулярных выражений
             // При этом отсекаем все переменные GET-запроса
-            
             Match reqMatch = Regex.Match(request, @"^\w+\s+([^\s\?]+)[^\s]*\s+HTTP/.*|");
 
             if (reqMatch == Match.Empty)
@@ -35,7 +34,6 @@ namespace HttpServer.Library
                 this.SetConsoleColor(ConsoleColor.Red);
                 Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 400);
                 this.ResetConsoleColor();
-
                 this.SendError(client, 400);
                 return;
             }
@@ -53,7 +51,6 @@ namespace HttpServer.Library
                 this.SetConsoleColor(ConsoleColor.Red);
                 Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 400);
                 this.ResetConsoleColor();
-
                 this.SendError(client, 400);
                 return;
             }
@@ -63,10 +60,7 @@ namespace HttpServer.Library
             {
                 requestUri += "index.html";
             }
-
-            string f = Environment.CurrentDirectory;
             string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-
             string _pathToFolder = wanted_path + "\\Website" + requestUri;
 
             if (!File.Exists(_pathToFolder))
@@ -74,17 +68,13 @@ namespace HttpServer.Library
                 this.SetConsoleColor(ConsoleColor.Red);
                 Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 404);
                 this.ResetConsoleColor();
-
                 this.SendError(client, 404);
                 return;
             }
-
             // Получаем расширение файла из строки запроса
             string extension = requestUri.Substring(requestUri.LastIndexOf('.'));
-
             // Тип содержимого
             string contentType = string.Empty;
-
             // Пытаемся определить тип содержимого по расширению файла
             switch (extension)
             {
@@ -113,8 +103,6 @@ namespace HttpServer.Library
                         contentType = "application/unknown";
                     break;
             }
-
-            // Открываем файл, страхуясь на случай ошибки
             FileStream fileStream;
             try
             {
@@ -125,18 +113,14 @@ namespace HttpServer.Library
                 this.SetConsoleColor(ConsoleColor.Red);
                 Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 500);
                 this.ResetConsoleColor();
-                // Если случилась ошибка, посылаем клиенту ошибку 500
                 this.SendError(client, 500);
                 return;
             }
-
             // Посылаем заголовки
             string headers = "HTTP/1.1 200 OK\nContent-Type: " + contentType + "\nContent-Length: " + fileStream.Length + "\n\n";
             byte[] headersBuffer = Encoding.ASCII.GetBytes(headers);
             client.GetStream().Write(headersBuffer, 0, headersBuffer.Length);
-
             // Пока не достигнут конец файла
-            
             while (fileStream.Position < fileStream.Length)
             {
                 // Читаем данные из файла
@@ -144,7 +128,6 @@ namespace HttpServer.Library
                 // И передаем их клиенту
                 client.GetStream().Write(buffer, 0, count);
             }
-
             // Закроем файл и соединение
             fileStream.Close();
             client.Close();
