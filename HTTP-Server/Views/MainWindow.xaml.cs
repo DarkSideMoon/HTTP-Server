@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HttpServer.Library;
+using System.Threading;
 
 namespace HttpServer
 {
@@ -25,13 +26,12 @@ namespace HttpServer
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += delegate { Initialize(); };
+            Loaded += delegate { this.Inialize(); };
         }
 
-        private void Initialize()
+        private void Inialize()
         {
-            foreach (var item in Server.GetLocalHosts)
-                listHosts.Items.Add(item.ToString());
+            listHosts.Items.Add("127.0.0.1");
         }
 
         private void MainGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -41,7 +41,17 @@ namespace HttpServer
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
-            Server.Start();
+            int MaxThreadsCount = Environment.ProcessorCount * 4;
+            ThreadPool.SetMaxThreads(MaxThreadsCount, MaxThreadsCount);
+            ThreadPool.SetMinThreads(2, 2);
+
+            new Server(80);
+        }
+
+        private void listHosts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            object item = listHosts.SelectedValue;
+            System.Diagnostics.Process.Start((string)"http://" + item);
         }
     }
 }

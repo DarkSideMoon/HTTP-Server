@@ -11,36 +11,61 @@ using HttpServer.Library.Logger;
 
 namespace HttpServer.Library
 {
+    public enum ServerTypeError
+    {
+        ExpiredSession = 1,
+        NotAuthorized = 2,
+        PageNotFound = 3,
+        ServerError = 4,
+        ValidationError = 5
+    }
+
     public class Server
     {
-        private static HttpListener listener;
-        private static Semaphore sem;
-
         private static RequestLogger _logger = new RequestLogger("RequestLogger");
         private State _state;
 
-        public Server()
-        {
-            this.MaxSimultaneousConnections = 20;
-            this.ExpirationTimeSeconds = 60;
-            this.ValidationTokenName = "__AdrinToken__";
+        private TcpListener _listener;
 
-            sem = new Semaphore(this.MaxSimultaneousConnections, this.MaxSimultaneousConnections);
+        public Server(int port)
+        {
+            this._listener = new TcpListener(IPAddress.Any, port);
+            this._listener.Start();
+
+            this.SetConsoleColor(ConsoleColor.Yellow);
+            Console.WriteLine("The server is starting...");
+            Console.WriteLine("Listening on http://127.0.0.1:" + port);
+            this.ResetConsoleColor();
+            Console.WriteLine("Current Time: " + DateTime.Now.ToString());
+
+            // Get new client
+            TcpClient client = this._listener.AcceptTcpClient();
+            this.SetConsoleColor(ConsoleColor.Blue);
+            Console.WriteLine("New client connected! Address: " + client.Client.LocalEndPoint.ToString());
+            this.ResetConsoleColor();
+  
+             while (true)
+                  ThreadPool.QueueUserWorkItem(new WaitCallback(ClientThread), _listener.AcceptTcpClient());
+
+            // Create new thread
+            //Thread thread = new Thread(new ParameterizedThreadStart(ClientThread));
+            // Start new thread with getting client
+            //thread.Start(client);
         }
 
-        public static List<IPAddress> GetLocalHosts
+        // Остановка сервера
+        ~Server()
         {
-            get { return GetLocalHostIPs(); }
-        }
-
-        public static bool IsStarted
-        {
-            get { return listener.IsListening; }
+            // Если "слушатель" был создан
+            if (this._listener != null)
+            {
+                // Остановим его
+                this._listener.Stop();
+            }
         }
 
         public int MaxSimultaneousConnections { get; set; }
         public int ExpirationTimeSeconds { get; set; }
-        public string ValidationTokenName { get; set; }
 
         /// <summary>
         /// State of the server
@@ -51,61 +76,15 @@ namespace HttpServer.Library
             set { this._state = value; }
         }
 
-        /// <summary>
-        /// Starts the web server.
-        /// </summary>
-        public static void Start()
+        private static void ClientThread(object stateInfo)
         {
-            List<IPAddress> localHostIPs = GetLocalHostIPs();
-            HttpListener listener = InitializeListener(localHostIPs);
-            Start(listener);
+            new Client((TcpClient)stateInfo);
         }
 
         /// <summary>
-        /// Begin listening to connections on a separate worker thread.
+        /// Get locals hosts ips addresses
         /// </summary>
-        private static void Start(HttpListener listener)
-        {
-            listener.Start();
-            Task.Run(() => RunServer(listener));
-        }
-
-        /// <summary>
-        /// Start awaiting for connections, up to the "maxSimultaneousConnections" value.
-        /// This code runs in a separate thread.
-        /// </summary>
-        private static void RunServer(HttpListener listener)
-        {
-            while (true)
-            {
-                sem.WaitOne();
-                StartConnectionListener(listener);
-            }
-        }
-
-        /// <summary>
-        /// Await connections.
-        /// </summary>
-        private static async void StartConnectionListener(HttpListener listener)
-        {
-            // Wait for a connection. Return to caller while we wait.
-            HttpListenerContext context = await listener.GetContextAsync();
-
-            // Write to logger the request
-            _logger.WriteMessage(context.Request);
-
-            // Release the semaphore so that another listener can be immediately started up.
-            sem.Release();
-            HttpListenerRequest request = context.Request;
-
-            // We have a connection, do something...
-            string response = "Hello Browser!";
-            byte[] encoded = Encoding.UTF8.GetBytes(response);
-            context.Response.ContentLength64 = encoded.Length;
-            context.Response.OutputStream.Write(encoded, 0, encoded.Length);
-            context.Response.OutputStream.Close();
-        }
-
+        /// <returns></returns>
         private static List<IPAddress> GetLocalHostIPs()
         {
             IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
@@ -113,18 +92,18 @@ namespace HttpServer.Library
             return result;
         }
 
-        private static HttpListener InitializeListener(List<IPAddress> localHostIPs)
+        #region Methods for work with console
+
+        private void SetConsoleColor(ConsoleColor color)
         {
-            listener = new HttpListener();
-            listener.Prefixes.Add("http://localhost/");
-
-            localHostIPs.ForEach(ip =>
-                {
-                    Console.WriteLine("Listening on IP " + "http://" + ip.ToString() + "/");
-                    listener.Prefixes.Add("http://" + ip.ToString() + "/");
-                });
-
-            return listener;
+            Console.ForegroundColor = color;
         }
+
+        private void ResetConsoleColor()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        #endregion
     }
 }

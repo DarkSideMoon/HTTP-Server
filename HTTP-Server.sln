@@ -27,6 +27,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6C5A20
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTP-Server.Library", "HTTP-Server.Library\HTTP-Server.Library.csproj", "{24E61245-7CCC-4501-BBF0-4ACB6BA27FC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTP-Server.Console", "HTTP-Server.Console\HTTP-Server.Console.csproj", "{3D93E6EC-3B7D-49C1-9922-9B7D0EE567FB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{24E61245-7CCC-4501-BBF0-4ACB6BA27FC7} = {24E61245-7CCC-4501-BBF0-4ACB6BA27FC7}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +50,10 @@ Global
 		{24E61245-7CCC-4501-BBF0-4ACB6BA27FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24E61245-7CCC-4501-BBF0-4ACB6BA27FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24E61245-7CCC-4501-BBF0-4ACB6BA27FC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D93E6EC-3B7D-49C1-9922-9B7D0EE567FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D93E6EC-3B7D-49C1-9922-9B7D0EE567FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D93E6EC-3B7D-49C1-9922-9B7D0EE567FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D93E6EC-3B7D-49C1-9922-9B7D0EE567FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

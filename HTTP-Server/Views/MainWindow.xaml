@@ -121,7 +121,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="252,4.8,0,0" TextWrapping="Wrap" 
         	Foreground="Gray" FontSize="16" Text="Local hosts" FontWeight="Medium" Grid.Row="2" Width="86" Height="27" VerticalAlignment="Top"/>
         
-        <ListBox x:Name="listHosts" HorizontalAlignment="Left" Height="66" Margin="358,4.8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="218"/>
+        <ListBox x:Name="listHosts" HorizontalAlignment="Left" Height="66" Margin="358,4.8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="218" />
 
         <!--Fourth block-->
 
