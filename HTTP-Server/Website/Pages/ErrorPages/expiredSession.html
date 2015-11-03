@@ -5,26 +5,225 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>Error 404</title>
+<title>Error</title>
 <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css" />
-<link href="../style.css" rel="stylesheet" type="text/css" media="screen" />
-<script type="text/javascript" src="jquery/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="jquery/jquery.gallerax-0.2.js"></script>
 <style type="text/css">
-@import "gallery.css";
+body {
+	margin: 0;
+	padding: 0;
+	background: #EFEFEF url(../../images/main-bg.jpg) repeat;
+	font-family: 'Arvo', serif;
+	font-size: 14px;
+	color: #000000;
+}
+
+h1, h2, h3 {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+	color: #221D1D;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+h2 {
+	font-size: 2.4em;
+}
+
+h3 {
+	font-size: 1.6em;
+}
+
+p, ul, ol {
+	margin-top: 0;
+	line-height: 180%;
+}
+
+ul, ol {
+}
+
+a {
+	text-decoration: none;
+	color: #091478;
+}
+
+#header {
+	width: 940px;
+	height: 150px;
+	margin: 0 auto;
+}
+
+#logo {
+	width: 960px;
+	height: 150px;
+	margin: 0px auto 30px auto;
+	color: #000000;
+}
+
+#logo h1, #logo p {
+	margin: 0;
+	padding: 0;
+}
+
+#logo h1 {
+	line-height: 150px;
+	letter-spacing: -1px;
+	text-align: center;
+	text-transform: lowercase;
+	font-size: 3.8em;
+}
+
+#logo p {
+	float: left;
+	margin: 0;
+	padding: 26px 0 0 10px;
+	text-align: center;
+	color: #000000;
+} 
+
+#logo p a {
+	color: #000000;
+}
+
+#logo a {
+	border: none;
+	background: none;
+	text-decoration: none;
+	color: #000000;
+}
+
+/* Menu */
+
+#menu {
+	overflow: hidden;
+	width: 1000px;
+	padding: 15px 0px;
+	margin: 0px auto 30px auto;
+	background: #83003E;
+	font-size: 20px;
+	color: #000000;
+}
+
+#menu ul {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px;
+	list-style: none;
+	line-height: normal;
+	text-align: center;
+}
+
+#menu li {
+	display: inline-block;
+	border-right: 1px solid #FFFFFF;
+}
+
+#menu a {
+	display: block;
+	padding: 0px 40px 0px 40px;
+	text-decoration: none;
+	text-align: center;
+	font-size: 16px;
+	font-weight:400;
+	color: #FFFFFF;
+	border: none;
+}
+
+#menu a:hover, #menu .current_page_item a {
+	text-decoration: none;
+}
+
+#menu .current_page_item a {
+	color: #FFFFFF;
+}
+
+#menu .last {
+	border-right: none;
+}
+
+/* Page */
+
+#page {
+	overflow: hidden;
+	width: 940px;
+	margin: 0px auto;
+	padding: 30px 30px;
+	background: #FFFFFF;
+	border: 1px solid #D4D4D4;
+}
+
+#three-columns {
+	overflow: hidden;
+	width: 1000px;
+	margin: 0px auto;
+	padding: 30px 0px;
+	border-bottom: 1px solid #D4D4D4;
+	color: #000000;
+}
+
+#three-columns h2 {
+	padding: 0px 0px 20px 0px;
+	font-size: 30px;
+	color: #000000;
+}
+
+#three-columns #column1 {
+	float: left;
+	width: 290px;
+	margin-right: 40px;
+}
+
+#three-columns #column2 {
+	float: left;
+	width: 290px;
+}
+
+#three-columns #column3 {
+	float: right;
+	width: 300px;
+}
+
+#welcome {
+	width: 1000px;
+	margin: 0px auto;
+	padding: 10px 0px;
+}
+
+#welcome h2 {
+	padding: 0px 0px 20px 0px;
+}
+
+#welcome h2 a {
+	color: #000000;
+}
+
+#welcome a {
+	color: #000000;
+}
+
+#banner {
+	overflow: hidden;
+	width: 1000px;
+	margin: 0px auto;
+	padding: 30px 0px;
+	border-top: 1px solid #D4D4D4;
+	border-bottom: 1px solid #D4D4D4;
+}
+
 </style>
 </head>
 <body>
 <div id="wrapper">
 	<div id="header">
 		<div id="logo">
-			<h1><a href="#">Adrin server</a></h1>
+			<h1>Adrin server</h1>
 		</div>
 	</div>
 	<div id="banner">
-	<img src="../images/expiredSession.png" align="right"/>
+	<img src="../../images/expiredSession.png" align="right"/>
 		<div id="welcome">
-			<h2 class="title"><a href="#">Problem. Oops. </br>Expired session</a></h2>
+			<h2 class="title">Problem. Oops. </br>Expired session</h2>
 			<div class="entry">
 				</br>
 				<h3>The server is sorry</h3>

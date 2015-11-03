@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,6 +31,6 @@ namespace HttpServer.Library.Logger
 
         public abstract void WriteMessage(string message, MessageType type);
 
-        public abstract void WriteMessage(HttpListenerRequest request);
+        public abstract void WriteMessage(TcpClient request, int code);
     }
 }

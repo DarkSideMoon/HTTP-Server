@@ -22,13 +22,14 @@ namespace HttpServer.Library
 
     public class Server
     {
-        private static RequestLogger _logger = new RequestLogger("RequestLogger");
+        private Log _logger;
         private State _state;
 
         private TcpListener _listener;
 
         public Server(int port)
         {
+            //this._logger = new MessageLogger("MessageLogger");
             this._listener = new TcpListener(IPAddress.Any, port);
             this._listener.Start();
 
@@ -37,6 +38,8 @@ namespace HttpServer.Library
             Console.WriteLine("Listening on http://127.0.0.1:" + port);
             this.ResetConsoleColor();
             Console.WriteLine("Current Time: " + DateTime.Now.ToString());
+
+            //this._logger.WriteMessage("The server is starting", Log.MessageType.Info);
 
             // Get new client
             TcpClient client = this._listener.AcceptTcpClient();

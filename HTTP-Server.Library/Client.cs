@@ -7,14 +7,19 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using HttpServer.Library.Logger;
 
 namespace HttpServer.Library
 {
     public class Client
     {
+        private Log _logger;
+
         // Конструктор класса. Ему нужно передавать принятого клиента от TcpListener
         public Client(TcpClient client)
         {
+            this._logger = new ResponseLogger("ResponseLogger");
+
             string request = string.Empty;
             byte[] buffer = new byte[1024];
             int count;
@@ -34,6 +39,8 @@ namespace HttpServer.Library
                 this.SetConsoleColor(ConsoleColor.Red);
                 Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 400);
                 this.ResetConsoleColor();
+
+                //this._logger.WriteMessage(client, 400);
                 this.SendError(client, 400);
                 return;
             }
@@ -51,6 +58,8 @@ namespace HttpServer.Library
                 this.SetConsoleColor(ConsoleColor.Red);
                 Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 400);
                 this.ResetConsoleColor();
+
+                //this._logger.WriteMessage(client, 400);
                 this.SendError(client, 400);
                 return;
             }
@@ -60,6 +69,7 @@ namespace HttpServer.Library
             {
                 requestUri += "index.html";
             }
+
             string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
             string _pathToFolder = wanted_path + "\\Website" + requestUri;
 
@@ -68,6 +78,8 @@ namespace HttpServer.Library
                 this.SetConsoleColor(ConsoleColor.Red);
                 Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 404);
                 this.ResetConsoleColor();
+
+                //this._logger.WriteMessage(client, 404);
                 this.SendError(client, 404);
                 return;
             }
@@ -113,6 +125,8 @@ namespace HttpServer.Library
                 this.SetConsoleColor(ConsoleColor.Red);
                 Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 500);
                 this.ResetConsoleColor();
+
+                //this._logger.WriteMessage(client, 500);
                 this.SendError(client, 500);
                 return;
             }
@@ -120,6 +134,8 @@ namespace HttpServer.Library
             string headers = "HTTP/1.1 200 OK\nContent-Type: " + contentType + "\nContent-Length: " + fileStream.Length + "\n\n";
             byte[] headersBuffer = Encoding.ASCII.GetBytes(headers);
             client.GetStream().Write(headersBuffer, 0, headersBuffer.Length);
+
+            //this._logger.WriteMessage(client, 200);
             // Пока не достигнут конец файла
             while (fileStream.Position < fileStream.Length)
             {

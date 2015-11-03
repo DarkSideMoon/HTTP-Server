@@ -19,7 +19,12 @@ namespace HttpServer.Library.ResponseServer
             builder.BuildTcpInfo(client);
 
             // Build the html page
-            builder.BuildHtml();
+            builder.BuildHtml(); // create text response
         }
     }
 }
+
+// Rewrite builder pattern
+// Create text pattern
+// подписатся на событие изменение файла, ели файл логов изменен
+// то ложить его на формуи записовать

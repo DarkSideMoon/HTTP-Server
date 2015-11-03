@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace HttpServer.Library.Logger
             : base(nameFile)
         {
             this.FileLocation = Environment.CurrentDirectory;
-            this.FileName = nameFile;
+            this.FileName = nameFile + ".txt";
         }
 
         public string FileLocation
@@ -49,18 +50,18 @@ namespace HttpServer.Library.Logger
 
             try
             {
-                fileStream = new FileStream(_fileLocation + this.FileName, FileMode.OpenOrCreate, FileAccess.Write);
-                writer = new StreamWriter(fileStream);
-
                 lock (SyncObject)
                 {
+                    fileStream = new FileStream(_fileLocation + this.FileName, FileMode.OpenOrCreate, FileAccess.Write);
+                    writer = new StreamWriter(fileStream);
+
                     writer.BaseStream.Seek(0, SeekOrigin.End);
 
-                    string banner = string.Format("[" + type.ToString().ToUpper() + "][" + DateTimeLog + "]");
-                    string body = message;
-                    string end = "----------------------------------------------------";
+                    string body = string.Format("[" + this.DateTimeLog + "]"
+                                                + "[" + type + "]"
+                                                + "[" + message + "]");
 
-                    mess.AppendLine(banner + newLine + body + newLine + end);
+                    mess.AppendLine(body);
 
                     writer.Write(mess);
                 }
@@ -73,7 +74,7 @@ namespace HttpServer.Library.Logger
             }
         }
 
-        public override void WriteMessage(System.Net.HttpListenerRequest request)
+        public override void WriteMessage(TcpClient request, int code)
         {
             throw new NotImplementedException();
         }
