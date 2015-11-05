@@ -1,28 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="HttpServer.Library.StateServer.HttpClosed" Collapsed="true">
-    <Position X="2.25" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>StateServer\HttpClosed.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="HttpServer.Library.StateServer.HttpError" Collapsed="true">
-    <Position X="4.25" Y="3" Width="1.5" />
+    <Position X="3.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>StateServer\HttpError.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="HttpServer.Library.StateServer.HttpEstablished" Collapsed="true">
-    <Position X="8.5" Y="3" Width="1.5" />
+    <Position X="7.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>StateServer\HttpEstablished.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="HttpServer.Library.StateServer.HttpListen" Collapsed="true">
-    <Position X="6.5" Y="3" Width="1.5" />
+    <Position X="5.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>StateServer\HttpListen.cs</FileName>
@@ -38,7 +31,7 @@
   <Class Name="HttpServer.Library.Server" Collapsed="true">
     <Position X="1.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAACAAAAAAAAYACQAAoMRAAAAIAAAABACCACA=</HashCode>
+      <HashCode>AAAgAAAAAAACAAAAAAAACAAIoAAAAAAIAAEABAACAAA=</HashCode>
       <FileName>Server.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>

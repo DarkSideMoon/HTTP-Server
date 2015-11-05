@@ -14,26 +14,34 @@ namespace HttpServer.Library.ResponseServer
         protected StringBuilder stringBuilder;
 
         /// <summary>
-        /// Get response instance
+        /// Property to get and set response instance
         /// </summary>
         public Response Response
         {
             get { return this.response; }
+            set { this.response = value; }
         }
 
         /// <summary>
         /// Get the all response in string
         /// </summary>
-        public StringBuilder StringResult
+        public StringBuilder ResponseString
         {
             get { return this.stringBuilder; }
         }
 
+        public abstract string CreateResponse();
+
+        public virtual void Clear()
+        {
+            this.response = null;
+        }
+
         // Abstract build methods
-        public abstract void BuildStatus(int code); // HTTP/1.1 200 OK
-        public abstract void BuildContent(string context); // Content-Length: 230 | Content-Type: text/html; charset=iso-8859-1
-        public abstract void BuildTcpInfo(TcpClient client); // Connection: Closed | ProtocolType | AddressFamily
-        public abstract void BuildInformation(); // Other information | Date
-        public abstract void BuildHtml(); // Dived into to methods BuildHead and BuildBody
+        protected abstract void BuildStatus(); // HTTP/1.1 200 OK
+        protected abstract void BuildContent(); // Content-Length: 230 | Content-Type: text/html; charset=iso-8859-1
+        protected abstract void BuildTcpInfo(); // Connection: Closed | ProtocolType | AddressFamily
+        protected abstract void BuildInformation(); // Other information | Date
+        protected abstract void BuildHtml(); // Dived into to methods BuildHead and BuildBody
     }
 }

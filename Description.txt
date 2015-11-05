@@ -16,3 +16,9 @@ Folder is cointain implementation of builder pattern using C#.
 Abstract class ResponseBuilder give example how to implements other clases. 
 State server using response builder to make a response clients on request
 Classes:
+
+
+// Rewrite builder pattern
+// Create text pattern
+// подписатся на событие изменение файла, ели файл логов изменен
+// то ложить его на формуи записовать

@@ -44,22 +44,21 @@
     </Compile>
     <Compile Include="Client.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
-    <Compile Include="ResponseServer\ErrorBuilder.cs" />
+    <Compile Include="ResponseServer\PageBuilder.cs" />
     <Compile Include="ResponseServer\Response.cs" />
     <Compile Include="ResponseServer\ResponseBuilder.cs" />
-    <Compile Include="ResponseServer\ResponseDirector.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Logger\Log.cs" />
     <Compile Include="Logger\MessageLogger.cs" />
     <Compile Include="Logger\ResponseLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StateServer\HttpClosed.cs" />
     <Compile Include="StateServer\HttpError.cs" />
     <Compile Include="StateServer\HttpEstablished.cs" />
     <Compile Include="StateServer\HttpListen.cs" />
     <Compile Include="StateServer\State.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ResponseServer\BuilderClassDiagram.cd" />
     <None Include="StateServer\StateClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup />
