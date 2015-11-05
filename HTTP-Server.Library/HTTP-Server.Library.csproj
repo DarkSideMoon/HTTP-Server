@@ -44,6 +44,7 @@
     </Compile>
     <Compile Include="Client.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
+    <Compile Include="Quote.cs" />
     <Compile Include="ResponseServer\PageBuilder.cs" />
     <Compile Include="ResponseServer\Response.cs" />
     <Compile Include="ResponseServer\ResponseBuilder.cs" />

@@ -16,6 +16,17 @@ namespace HttpServer.Library.ResponseServer
             this.stringBuilder = new StringBuilder();
         }
 
+        public override string CreateResponse()
+        {
+            this.BuildStatus();
+            this.BuildContent();
+            this.BuildTcpInfo();
+            this.BuildInformation();
+            this.BuildHtml();
+
+            return this.stringBuilder.ToString();
+        }
+
         protected override void BuildStatus()
         {
             string codeStr = this.response.StatusCode.ToString() + " " + ((HttpStatusCode)this.response.StatusCode).ToString();
@@ -27,7 +38,7 @@ namespace HttpServer.Library.ResponseServer
         protected override void BuildContent()
         {
             this.stringBuilder.Append("Content-Length: " + this.response.ContentLength).AppendLine();
-            this.stringBuilder.Append("Content-Type: text/html; charset=" + this.response.Charset.EncodingName).AppendLine();
+            this.stringBuilder.Append("Content-Type: text/html; charset=UTF8").AppendLine();
         }
 
         protected override void BuildTcpInfo()
@@ -46,35 +57,8 @@ namespace HttpServer.Library.ResponseServer
 
         protected override void BuildHtml()
         {
-            this.stringBuilder.Append("<html>").AppendLine();
-
-            this.stringBuilder.Append(this.BuildHead()).AppendLine();
-            this.stringBuilder.Append(this.BuildBody()).AppendLine();
-
-            this.stringBuilder.Append("</html>").AppendLine();
-        }
-
-        private string BuildHead()
-        {
-            string head = "<head> " + "</head>";
-            return head;
-        }
-
-        private string BuildBody()
-        {
-            string body = "<body> " + "</body>";
-            return body;
-        }
-
-        public override string CreateResponse()
-        {
-            this.BuildStatus();
-            this.BuildContent();
-            this.BuildTcpInfo();
-            this.BuildInformation();
-            this.BuildHtml();
-
-            return this.stringBuilder.ToString();
+            this.stringBuilder.AppendLine();
+            this.stringBuilder.Append(this.response.Html).AppendLine();
         }
     }
 }

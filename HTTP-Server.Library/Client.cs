@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HttpServer.Library.Logger;
+using HttpServer.Library.ResponseServer;
 
 namespace HttpServer.Library
 {
@@ -21,7 +22,7 @@ namespace HttpServer.Library
             this._logger = new ResponseLogger("ResponseLogger");
 
             string request = string.Empty;
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[2048]; //1024
             int count;
 
             while ((count = client.GetStream().Read(buffer, 0, buffer.Length)) > 0)
@@ -152,15 +153,44 @@ namespace HttpServer.Library
         // Отправка страницы с ошибкой
         private void SendError(TcpClient client, int code)
         {
-            // Получаем строку вида "200 OK"
-            // HttpStatusCode хранит в себе все статус-коды HTTP/1.1
             string codeStr = code.ToString() + " " + ((HttpStatusCode)code).ToString();
-            // Код простой HTML-странички
-            string html = "<html><body><h1>" + codeStr + "</h1></body></html>";
-            // Необходимые заголовки: ответ сервера, тип и длина содержимого. После двух пустых строк - само содержимое
-            string str = "HTTP/1.1 " + codeStr + "\nContent-type: text/html\nContent-Length:" + html.Length.ToString() + "\n\n" + html;
+         
+            //string html = "<html><body><h1>" + codeStr + "</h1></body></html>";
+
+            //string str = "HTTP/1.1 " + codeStr + "\nContent-type: text/html\nContent-Length:" + html.Length.ToString() + "\n\n" + html;
+
+            Quote q = new Quote();
+
+            string html = "<html>" +
+                                "<body>" +
+                                    "<h1>" + codeStr + "</h1>" +
+                                    "<h3>Quote of the day</h3>" +
+                                    "<blockquote><h3><i>" + q.GetQuote() + "</i></h3></blockquote>" +
+                                    "<h3>Черномырдин Виктор Степанович</h3>" +
+                                 "</body>" +
+                           "</html>";
+
+            ResponseBuilder builder = new PageBuilder()
+            {
+                Response = new Response()
+                {
+                    AddressFamily = System.Net.Sockets.AddressFamily.InterNetwork,
+                    IsConnected = true,
+                    Html = html,
+                    ContentLength = html.Length,
+                    StatusDesc = ((HttpStatusCode)code).ToString(),
+                    ContentType = "text/html",
+                    StatusCode = code,
+                    Charset = System.Text.Encoding.UTF8,
+                    DateTimeResponse = DateTime.Now,
+                    ProtocolType = System.Net.Sockets.ProtocolType.Tcp
+                }
+            };
+
+            string str = builder.CreateResponse();
+
             // Приведем строку к виду массива байт
-            byte[] buffer = Encoding.ASCII.GetBytes(str);
+            byte[] buffer = Encoding.UTF8.GetBytes(str);
             // Отправим его клиенту
             client.GetStream().Write(buffer, 0, buffer.Length);
             // Закроем соединение

@@ -26,10 +26,10 @@ namespace HttpServer.Test
 
             string resActual = errorBuilder.CreateResponse();
             string resExpected = "HTTP/1.1 200 OK \nContent-Length: 120 \nContent-Type: text/html; charset=US-ASCII " +
-                                 "\nProtocolType: Tcp \nAddressFamily: InterNetwork \nIsConnected: True" + 
+                                 "\nProtocolType: Tcp \nAddressFamily: InterNetwork \nIsConnected: True" +
                                  "<html> \n<head> </head> \n<body> </body> \n</html> ";
 
-            // Not equals because the DateTime is different 
+            // Not equals because the DateTime is different
             Assert.AreNotEqual(resExpected, resActual);
         }
     }

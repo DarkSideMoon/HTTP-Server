@@ -43,5 +43,6 @@ namespace HttpServer.Library.ResponseServer
         public string Body { get; set; }
         public ProtocolType ProtocolType { get; set; }
         public AddressFamily AddressFamily { get; set; }
+        public string Html { get; set; }
     }
 }
