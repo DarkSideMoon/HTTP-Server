@@ -12,7 +12,7 @@ namespace HttpServer.Test
         {
             IpInfoData data = IpConfig.GetIpInfo();
             string resExpected = "78.27.148.159";
-
+            
             Assert.AreEqual(resExpected, data.Ip);
         }
     }

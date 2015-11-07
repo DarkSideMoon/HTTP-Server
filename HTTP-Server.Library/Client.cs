@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HttpServer.Library.Logger;
 using HttpServer.Library.ResponseServer;
+using HttpServer.Library.RouteFolder;
 
 namespace HttpServer.Library
 {
@@ -17,6 +18,7 @@ namespace HttpServer.Library
     public class Client
     {
         private Log _logger;
+        private Route _route;
 
         // Конструктор класса. Ему нужно передавать принятого клиента от TcpListener
         public Client(TcpClient client)
@@ -49,6 +51,15 @@ namespace HttpServer.Library
             }
             // Получаем строку запроса
             string requestUri = reqMatch.Groups[1].Value;
+            string[] arrRouting = Regex.Split(requestUri, @"/");
+            this._route = new Route(arrRouting);
+
+            if(this._route.IsRouting == true)
+            {
+                // Detected what is query and create a response to client 
+                // this._route.SendResponse();
+                return;
+            }
 
             // Приводим ее к изначальному виду, преобразуя экранированные символы
             // Например, "%20" -> " "

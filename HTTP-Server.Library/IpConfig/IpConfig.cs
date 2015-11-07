@@ -26,7 +26,6 @@ namespace HttpServer.Library.IpConfig
             }
 
             _dataObject = JObject.Parse(_result);
-            
             try
             {
                 dataIp = JsonConvert.DeserializeObject<IpInfoData>(_dataObject.ToString());

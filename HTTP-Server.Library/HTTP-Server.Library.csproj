@@ -59,7 +59,9 @@
     <Compile Include="ResponseServer\PageBuilder.cs" />
     <Compile Include="ResponseServer\Response.cs" />
     <Compile Include="ResponseServer\ResponseBuilder.cs" />
-    <Compile Include="Route.cs" />
+    <Compile Include="RouteFolder\IpRoute.cs" />
+    <Compile Include="RouteFolder\Route.cs" />
+    <Compile Include="RouteFolder\WeatherRoute.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Logger\Log.cs" />
     <Compile Include="Logger\MessageLogger.cs" />
