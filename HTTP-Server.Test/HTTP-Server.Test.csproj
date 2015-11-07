@@ -40,6 +40,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="WeatherLibrary">
+      <HintPath>..\..\..\Pasha\WorkNow\Amazon\AWSWeatherWebApp\WeatherLibrary\bin\Debug\WeatherLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -62,6 +65,8 @@
     <Compile Include="TestServer.cs" />
     <Compile Include="TestResponseBuilder.cs" />
     <Compile Include="TestQuote.cs" />
+    <Compile Include="TestWeather.cs" />
+    <Compile Include="TestIp.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

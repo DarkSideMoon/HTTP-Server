@@ -12,6 +12,8 @@ using HttpServer.Library.ResponseServer;
 
 namespace HttpServer.Library
 {
+    // HTTP-server (state,builder,factory method, mediator, composite)
+    // Authentication Basic Digest
     public class Client
     {
         private Log _logger;
@@ -154,7 +156,6 @@ namespace HttpServer.Library
         private void SendError(TcpClient client, int code)
         {
             string codeStr = code.ToString() + " " + ((HttpStatusCode)code).ToString();
-         
             //string html = "<html><body><h1>" + codeStr + "</h1></body></html>";
 
             //string str = "HTTP/1.1 " + codeStr + "\nContent-type: text/html\nContent-Length:" + html.Length.ToString() + "\n\n" + html;
