@@ -51,15 +51,18 @@ namespace HttpServer.Library
             }
             // Получаем строку запроса
             string requestUri = reqMatch.Groups[1].Value;
-            string[] arrRouting = Regex.Split(requestUri, @"/");
-            this._route = new Route(arrRouting);
 
-            if(this._route.IsRouting == true)
+            // **********************Routing URL**********************
+            string[] arrRouting = Regex.Split(requestUri, @"/");
+            this._route = new Route(arrRouting, client);
+
+            if (this._route.IsRouting == true)
             {
-                // Detected what is query and create a response to client 
-                // this._route.SendResponse();
+                // Detected what is query and create a response to client
+                this._route.Send(this._route.Path);
                 return;
             }
+            // **********************Routing URL**********************
 
             // Приводим ее к изначальному виду, преобразуя экранированные символы
             // Например, "%20" -> " "
@@ -164,13 +167,11 @@ namespace HttpServer.Library
         }
 
         // Отправка страницы с ошибкой
+        // Убрать в класс State Error !!!!!!!!!!!!
         private void SendError(TcpClient client, int code)
         {
+
             string codeStr = code.ToString() + " " + ((HttpStatusCode)code).ToString();
-            //string html = "<html><body><h1>" + codeStr + "</h1></body></html>";
-
-            //string str = "HTTP/1.1 " + codeStr + "\nContent-type: text/html\nContent-Length:" + html.Length.ToString() + "\n\n" + html;
-
             Quote q = new Quote();
 
             string html = "<html>" +

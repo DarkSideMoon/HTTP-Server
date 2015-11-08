@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,21 +9,20 @@ namespace HttpServer.Library.RouteFolder
 {
     public class Route
     {
-        protected static Dictionary<int, string> dictionaryRotes = new Dictionary<int, string>() 
+        protected static Dictionary<int, string> dictionaryRotes = new Dictionary<int, string>()
         {
             { 1, "getWeather" },
             { 2, "getIp" }
         };
 
-        public string Value { get; set; }
-        public string Path { get; set; }
-        public bool IsRouting { get; set; }
+        public Route() { }
 
-        public Route(string[] route) // string[] route  1: path 2: value
+        public Route(string[] route, TcpClient client) // string[] route  1: path 2: value
         {
             try
             {
-                this.Value = route[2];
+                Client = client;
+                Value = route[2];
                 this.Path = route[1];
                 this.FindRoute();
             }
@@ -30,6 +30,23 @@ namespace HttpServer.Library.RouteFolder
             {
                 return;
             }
+        }
+
+        public static TcpClient Client { get; set; }
+        public static string Value { get; set; }
+        public string Path { get; set; }
+        public bool IsRouting { get; set; }
+
+        public void Send(string path)
+        {
+            if (path == "getIp")
+                new IpRoute().SendResponse();
+            if (path == "getWeather")
+                new WeatherRoute().SendResponse();
+        }
+
+        protected virtual void SendResponse()
+        {
         }
 
         private void FindRoute()
@@ -42,12 +59,6 @@ namespace HttpServer.Library.RouteFolder
                 }
                 else
                     this.IsRouting = false;
-               
-        }
-
-        protected virtual void SendResponse()
-        {
-
         }
     }
 }
