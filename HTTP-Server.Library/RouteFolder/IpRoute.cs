@@ -10,6 +10,7 @@ using HttpServer.Library.IpConfig;
 
 namespace HttpServer.Library.RouteFolder
 {
+    // Concrete realisation of Route
     public class IpRoute : Route
     {
         private IpInfoData _dataIp;
@@ -25,8 +26,21 @@ namespace HttpServer.Library.RouteFolder
 
         protected override void SendResponse()
         {
+            string wanted_path = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+            string _pathToFolder = wanted_path + "\\Website\\Styles\\SimplePageStyle.css";
+            string css = string.Empty;
+
+            using (System.IO.StreamReader reader = new System.IO.StreamReader(_pathToFolder))
+            {
+                css = reader.ReadToEnd();
+            }
+
             _dataIp = IpConfig.IpConfig.GetIpInfo();
             string html = "<html>" +
+                            "<head>" +
+                                "<title>Weaher</title>" +
+                                "<style type=\"text/css\">" + css + "</style>" +
+                            "</head>" +
                                 "<body>" +
                                     "<h1>Ip information</h1>" +
                                     "<h3>IP: </h3>" + "<i>" + this._dataIp.Ip + "</i>" +

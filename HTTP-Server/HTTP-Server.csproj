@@ -190,6 +190,7 @@
     <Content Include="Website\Pages\ErrorPages\pageNotFound.html" />
     <Content Include="Website\Pages\ErrorPages\serverError.html" />
     <Content Include="Website\Pages\ErrorPages\validationError.html" />
+    <Content Include="Website\Styles\SimplePageStyle.css" />
     <Resource Include="Website\Images\404.png" />
     <Resource Include="Website\Images\Adrin.png" />
     <Resource Include="Website\Images\Dakar.jpg" />

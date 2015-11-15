@@ -60,6 +60,7 @@
     <Compile Include="ResponseServerBuilder\Response.cs" />
     <Compile Include="ResponseServerBuilder\ResponseBuilder.cs" />
     <Compile Include="RouteFolder\IpRoute.cs" />
+    <Compile Include="RouteFolder\IRoute.cs" />
     <Compile Include="RouteFolder\Route.cs" />
     <Compile Include="RouteFolder\WeatherRoute.cs" />
     <Compile Include="Server.cs" />
@@ -76,9 +77,6 @@
     <None Include="packages.config" />
     <None Include="ResponseServerBuilder\BuilderClassDiagram.cd" />
     <None Include="StateServer\StateClassDiagram.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HtmlTemplates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

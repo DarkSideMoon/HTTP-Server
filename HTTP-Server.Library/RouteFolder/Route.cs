@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace HttpServer.Library.RouteFolder
 {
-    public class Route
+    // Abstract class
+    public class Route 
     {
         protected static Dictionary<int, string> dictionaryRotes = new Dictionary<int, string>()
         {
@@ -36,6 +37,7 @@ namespace HttpServer.Library.RouteFolder
         public static string Value { get; set; }
         public string Path { get; set; }
         public bool IsRouting { get; set; }
+
 
         public void Send(string path)
         {

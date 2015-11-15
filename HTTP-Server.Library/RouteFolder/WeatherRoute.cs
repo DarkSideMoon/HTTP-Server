@@ -11,6 +11,7 @@ using WeatherLibrary.Data;
 
 namespace HttpServer.Library.RouteFolder
 {
+    // Concrete realisation of Route
     public class WeatherRoute : Route
     {
         private Weather _weather;
@@ -29,9 +30,21 @@ namespace HttpServer.Library.RouteFolder
             _weather = new Weather(Route.Value); // value the city to get weather 
             Tuple<WeatherCondition, WeatherWind, WeatherAtmosphere, WeatherAstronomy> resWeather = _weather.GetWeather();
 
+            string wanted_path = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+            string _pathToFolder = wanted_path + "\\Website\\Styles\\SimplePageStyle.css";
+            string css = string.Empty;
+
+            using(System.IO.StreamReader reader = new System.IO.StreamReader(_pathToFolder))
+            {
+                css = reader.ReadToEnd();
+            }
+
             string html = "<html>" +
+                            "<head>" +
+                                "<title>Weaher</title>" + 
+                                "<style type=\"text/css\">" + css + "</style>" +
+                            "</head>" +
                                 "<body>" +
-                                    "<h1>Weather information from " + this._weather.City + "</h1>" +
                                     "<h2>" + this._weather.GetTitle() + "</h2>" +
                                     "<h3>Weather conditaion: </h3>" + "<hr>" +
                                         "<h4>Condition: </h4> <i>" + resWeather.Item1.Conditions + "</i>" +

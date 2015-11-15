@@ -1,0 +1,45 @@
+﻿body
+{
+    margin: 10px;
+	padding: 10px;
+	background: #EFEFEF url(../Images/main-bg.jpg) repeat;
+	font-size: 14px;
+	color: #000000;
+}
+
+h1 {
+	margin: 2px;
+	padding: 2px;
+	font-weight: normal;
+	color: #808080;
+}
+
+h1 {
+	font-size: 2em;
+    line-height: 1;
+}
+
+h2 {
+	font-size: 2em;
+    line-height: 1;
+}
+
+h3 {
+	font-size: 1.6em;
+    line-height: 1;
+}
+
+h3 {
+	font-size: 1.2em;
+    line-height: 1;
+}
+
+hr {
+    width: 100%;
+    height: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #F1DEA3;
+    color: #F1DEA3;
+    border: 0 none;
+}
