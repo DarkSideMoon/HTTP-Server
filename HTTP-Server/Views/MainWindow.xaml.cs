@@ -54,11 +54,5 @@ namespace HttpServer
         {
             this._server = new Server((int)port);
         }
-
-        private void listHosts_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            object item = listHosts.SelectedValue;
-            System.Diagnostics.Process.Start((string)"http://" + item);
-        }
     }
 }

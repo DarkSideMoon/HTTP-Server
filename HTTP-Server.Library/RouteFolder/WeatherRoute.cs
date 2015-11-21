@@ -1,5 +1,4 @@
-﻿using HttpServer.Library.ResponseServer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeatherLibrary;
 using WeatherLibrary.Data;
+using HttpServer.Library.ResponseServer;
 
 namespace HttpServer.Library.RouteFolder
 {
@@ -15,7 +15,7 @@ namespace HttpServer.Library.RouteFolder
     public class WeatherRoute : Route
     {
         private Weather _weather;
-        public WeatherRoute(string[] path, TcpClient client)
+        public WeatherRoute(string path, TcpClient client)
             : base(path, client)
         {
         }
@@ -27,21 +27,21 @@ namespace HttpServer.Library.RouteFolder
 
         protected override void SendResponse()
         {
-            _weather = new Weather(Route.Value); // value the city to get weather 
+            _weather = new Weather(Route.Value); // value the city to get weather
             Tuple<WeatherCondition, WeatherWind, WeatherAtmosphere, WeatherAstronomy> resWeather = _weather.GetWeather();
 
-            string wanted_path = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-            string _pathToFolder = wanted_path + "\\Website\\Styles\\SimplePageStyle.css";
+            string _path = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+            string _pathToFolder = _path + "\\Website\\Styles\\SimplePageStyle.css";
             string css = string.Empty;
 
-            using(System.IO.StreamReader reader = new System.IO.StreamReader(_pathToFolder))
+            using (System.IO.StreamReader reader = new System.IO.StreamReader(_pathToFolder))
             {
                 css = reader.ReadToEnd();
             }
 
             string html = "<html>" +
                             "<head>" +
-                                "<title>Weaher</title>" + 
+                                "<title>Weaher</title>" +
                                 "<style type=\"text/css\">" + css + "</style>" +
                             "</head>" +
                                 "<body>" +
@@ -86,6 +86,32 @@ namespace HttpServer.Library.RouteFolder
             Route.Client.GetStream().Write(buffer, 0, buffer.Length);
             // Закроем соединение
             Route.Client.Close();
+        }
+
+        protected override void SendJson()
+        {
+            string _path = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+            string _pathToFile = _path + "\\Website\\Docs\\example.json";
+
+            string json = string.Empty;
+
+            using (System.IO.StreamReader reader = new System.IO.StreamReader(_pathToFile))
+            {
+                json = reader.ReadToEnd();
+            }
+
+            // Приведем строку к виду массива байт
+            byte[] buffer = Encoding.UTF8.GetBytes(json);
+            try
+            {
+                // Отправим его клиенту
+                Route.Client.GetStream().Write(buffer, 0, buffer.Length);
+                // Закроем соединение
+                Route.Client.Close();
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

@@ -179,7 +179,6 @@
   <ItemGroup>
     <Folder Include="Commands\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Website\Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Website\favicon.ico" />
@@ -190,17 +189,15 @@
     <Content Include="Website\Pages\ErrorPages\pageNotFound.html" />
     <Content Include="Website\Pages\ErrorPages\serverError.html" />
     <Content Include="Website\Pages\ErrorPages\validationError.html" />
+    <Content Include="Website\Pages\LogIn.html" />
+    <Content Include="Website\Pages\Main.html" />
+    <Content Include="Website\Scripts\jquery-2.1.4.min.js" />
     <Content Include="Website\Styles\SimplePageStyle.css" />
     <Resource Include="Website\Images\404.png" />
     <Resource Include="Website\Images\Adrin.png" />
-    <Resource Include="Website\Images\Dakar.jpg" />
     <Resource Include="Website\Images\expiredSession.png" />
-    <Resource Include="Website\Images\fotogrph-compass-on-the-roc.jpg" />
-    <Resource Include="Website\Images\lamborghini.jpg" />
     <Resource Include="Website\Images\main-bg.jpg" />
     <Resource Include="Website\Images\notAuthorized.png" />
-    <Resource Include="Website\Images\pics02.jpg" />
-    <Resource Include="Website\Images\repair.jpg" />
     <Resource Include="Website\Images\serverError.png" />
     <Resource Include="Website\Images\validationError.jpg" />
     <Content Include="Website\index.html" />

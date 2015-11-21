@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,7 +53,13 @@
       <Link>Properties\AssemblyInfoVersion.cs</Link>
     </Compile>
     <Compile Include="Client.cs" />
+    <Compile Include="ClientLogic\User.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
+    <Compile Include="FactoryMethod\IJsonStorage.cs" />
+    <Compile Include="FactoryMethod\JsonManager.cs" />
+    <Compile Include="FactoryMethod\MyJson.cs" />
+    <Compile Include="FactoryMethod\ScheduleJsonStorage.cs" />
+    <Compile Include="FactoryMethod\WeatherJsonStorage.cs" />
     <Compile Include="IpConfig\IpConfig.cs" />
     <Compile Include="IpConfig\IpInfoData.cs" />
     <Compile Include="Quote.cs" />
@@ -60,7 +67,8 @@
     <Compile Include="ResponseServerBuilder\Response.cs" />
     <Compile Include="ResponseServerBuilder\ResponseBuilder.cs" />
     <Compile Include="RouteFolder\IpRoute.cs" />
-    <Compile Include="RouteFolder\IRoute.cs" />
+    <Compile Include="RouteFolder\LogInRoute.cs" />
+    <Compile Include="RouteFolder\MainPageRoute.cs" />
     <Compile Include="RouteFolder\Route.cs" />
     <Compile Include="RouteFolder\WeatherRoute.cs" />
     <Compile Include="Server.cs" />
@@ -74,10 +82,12 @@
     <Compile Include="StateServer\State.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="FactoryMethod\FactoryMethodDiagramm.cd" />
     <None Include="packages.config" />
     <None Include="ResponseServerBuilder\BuilderClassDiagram.cd" />
     <None Include="StateServer\StateClassDiagram.cd" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

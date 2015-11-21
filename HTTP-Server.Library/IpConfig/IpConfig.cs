@@ -19,7 +19,7 @@ namespace HttpServer.Library.IpConfig
         {
             IpInfoData dataIp = new IpInfoData();
 
-            using(WebClient wc = new WebClient())
+            using (WebClient wc = new WebClient())
             {
                 wc.Encoding = Encoding.UTF8;
                 _result = wc.DownloadString(_url);

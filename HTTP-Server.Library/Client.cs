@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using HttpServer.Library.Logger;
 using HttpServer.Library.ResponseServer;
 using HttpServer.Library.RouteFolder;
+using System.Web;
+
+// return json, html, xml
+// asp.net mvc
 
 namespace HttpServer.Library
 {
@@ -19,7 +23,7 @@ namespace HttpServer.Library
     {
         private Log _logger;
         private Route _route;
-
+        
         // Конструктор класса. Ему нужно передавать принятого клиента от TcpListener
         public Client(TcpClient client)
         {
@@ -53,13 +57,12 @@ namespace HttpServer.Library
             string requestUri = reqMatch.Groups[1].Value;
 
             // **********************Routing URL**********************
-            string[] arrRouting = Regex.Split(requestUri, @"/");
-            this._route = new Route(arrRouting, client);
-
+            this._route = new Route(requestUri, client);
+            // The object is deleted by carabidge collector if not using this if statment
             if (this._route.IsRouting == true)
             {
                 // Detected what is query and create a response to client
-                this._route.Send(this._route.Path);
+                this._route.Send(this._route.Action);
                 return;
             }
             // **********************Routing URL**********************
@@ -170,7 +173,6 @@ namespace HttpServer.Library
         // Убрать в класс State Error !!!!!!!!!!!!
         private void SendError(TcpClient client, int code)
         {
-
             string codeStr = code.ToString() + " " + ((HttpStatusCode)code).ToString();
             Quote q = new Quote();
 

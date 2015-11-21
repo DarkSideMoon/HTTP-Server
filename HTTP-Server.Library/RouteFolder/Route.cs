@@ -3,28 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HttpServer.Library.RouteFolder
 {
     // Abstract class
-    public class Route 
+    public class Route
     {
         protected static Dictionary<int, string> dictionaryRotes = new Dictionary<int, string>()
         {
             { 1, "getWeather" },
-            { 2, "getIp" }
+            { 2, "getIp" },
+            { 3, "getJson" },
+            { 4, "logIn" }
         };
 
-        public Route() { }
-
-        public Route(string[] route, TcpClient client) // string[] route  1: path 2: value
+        public Route()
         {
+        }
+
+        public Route(string route, TcpClient client)
+        {
+            AllRoute = route;
             try
             {
+                string[] newRoute = this.Parse(route);
                 Client = client;
-                Value = route[2];
-                this.Path = route[1];
+                Value = newRoute[2];
+                this.Action = newRoute[1];
+
                 this.FindRoute();
             }
             catch (IndexOutOfRangeException)
@@ -33,34 +41,63 @@ namespace HttpServer.Library.RouteFolder
             }
         }
 
+        public static string AllRoute { get; set; }
         public static TcpClient Client { get; set; }
         public static string Value { get; set; }
-        public string Path { get; set; }
+        public string Action { get; set; }
         public bool IsRouting { get; set; }
 
 
         public void Send(string path)
         {
-            if (path == "getIp")
-                new IpRoute().SendResponse();
-            if (path == "getWeather")
-                new WeatherRoute().SendResponse();
+            switch (path)
+            {
+                case "getIp":
+                    new IpRoute().SendResponse();
+                    break;
+                case "getWeather":
+                    new WeatherRoute().SendResponse();
+                    break;
+                case "getJson":
+                    new WeatherRoute().SendJson();
+                    break;
+                case "logIn":
+                    new LogInRoute().SendResponse();
+                    break;
+                default:
+                    return;
+            }
         }
 
         protected virtual void SendResponse()
         {
         }
 
+        protected virtual void SendJson()
+        {
+        }
+
         private void FindRoute()
         {
             foreach (var item in dictionaryRotes)
-                if (item.Value == this.Path)
+                if (item.Value == this.Action)
                 {
                     this.IsRouting = true;
                     break;
                 }
                 else
                     this.IsRouting = false;
+        }
+
+        /// <summary>
+        /// Parse the string by different parameters
+        /// parsing url string like this => 127.0.0.1/{action}/{value}
+        /// </summary>
+        /// <param name="route"></param>
+        /// <returns></returns>
+        private string[] Parse(string route)
+        {
+            return Regex.Split(route, @"/");
         }
     }
 }
