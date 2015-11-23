@@ -67,6 +67,7 @@
     <Compile Include="TestQuote.cs" />
     <Compile Include="TestWeather.cs" />
     <Compile Include="TestIp.cs" />
+    <Compile Include="TestFactoryMethod.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

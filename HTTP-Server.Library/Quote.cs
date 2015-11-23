@@ -46,12 +46,19 @@ namespace HttpServer.Library
 
         private void ReadAllQuotes()
         {
-            using (FileStream stream = new FileStream(this._fileLocation + "\\" + this._fileName, FileMode.Open, FileAccess.Read))
+            try
             {
-                using (StreamReader _reader = new StreamReader(stream))
+                using (FileStream stream = new FileStream(this._fileLocation + "\\" + this._fileName, FileMode.Open, FileAccess.Read))
                 {
-                    this._allQuotes = _reader.ReadToEnd();
+                    using (StreamReader _reader = new StreamReader(stream))
+                    {
+                        this._allQuotes = _reader.ReadToEnd();
+                    }
                 }
+            }
+            catch (ObjectDisposedException ex)
+            {
+                throw new ObjectDisposedException(ex.Message, ex);
             }
         }
 

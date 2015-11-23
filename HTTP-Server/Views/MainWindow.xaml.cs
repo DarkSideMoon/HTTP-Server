@@ -23,7 +23,6 @@ namespace HttpServer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Server _server;
         public MainWindow()
         {
             InitializeComponent();
@@ -52,7 +51,8 @@ namespace HttpServer
 
         private void StartServer(object port)
         {
-            this._server = new Server((int)port);
+            Server server = new Server((int)port);
+            //State state = server.State;
         }
     }
 }

@@ -126,9 +126,8 @@ input {
                 $.ajax({
                     type: "POST",
                     url: "http://127.0.0.1",
-                    data: "{\"user\": " +
-                            " {\"email\":" + user.email + "," +
-                            " \"password\": " + user.password + "}",
+                    data:
+                            "{ \"Email\": \"" + user.email + "\", \"Password\": \"" + user.password + "\" }",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function () { alert("Send!"); }

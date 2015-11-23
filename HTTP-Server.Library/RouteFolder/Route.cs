@@ -16,7 +16,8 @@ namespace HttpServer.Library.RouteFolder
             { 1, "getWeather" },
             { 2, "getIp" },
             { 3, "getJson" },
-            { 4, "logIn" }
+            { 4, "logIn" },
+            { 5, "registration" }
         };
 
         public Route()
@@ -63,6 +64,9 @@ namespace HttpServer.Library.RouteFolder
                     break;
                 case "logIn":
                     new LogInRoute().SendResponse();
+                    break;
+                case "registration":
+                    new RegistrationRoute().SendResponse();
                     break;
                 default:
                     return;

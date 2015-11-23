@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HttpServer.Library.ClientLogic
 {
-    public class User 
+    public class User
     {
         private static List<User> _usersOnline = new List<User>();
         private static List<User> _banUsers = new List<User>();
@@ -38,6 +38,7 @@ namespace HttpServer.Library.ClientLogic
             return _banUsers;
         }
 
+        // Send push notification on mobile that is new user entered in your server cool and awesome
         public void AddOnlineUser(User user)
         {
             _usersOnline.Add(user);

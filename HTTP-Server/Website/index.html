@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -212,6 +212,15 @@ a {
 }
 
 </style>
+
+    <script type="text/javascript" src="Scripts/jquery-2.1.4.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (Notification.permission !== "granted")
+                Notification.requestPermission();
+        });
+    </script>
+
 </head>
 <body>
 <div id="wrapper">
@@ -257,6 +266,7 @@ a {
 			<p>Etiam non felis. Donec ut ante. In id eros. Suspendisse lacus turpis, cursus egestas at sem. Mauris quam enim, molestie.</p>
 		</div>
 	</div>
+    </div>
 <!-- end #footer -->
 </body>
 </html>

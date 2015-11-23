@@ -191,6 +191,7 @@
     <Content Include="Website\Pages\ErrorPages\validationError.html" />
     <Content Include="Website\Pages\LogIn.html" />
     <Content Include="Website\Pages\Main.html" />
+    <Content Include="Website\Pages\Registration.html" />
     <Content Include="Website\Scripts\jquery-2.1.4.min.js" />
     <Content Include="Website\Styles\SimplePageStyle.css" />
     <Resource Include="Website\Images\404.png" />

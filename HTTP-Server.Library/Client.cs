@@ -7,10 +7,10 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using HttpServer.Library.Logger;
 using HttpServer.Library.ResponseServer;
 using HttpServer.Library.RouteFolder;
-using System.Web;
 
 // return json, html, xml
 // asp.net mvc
@@ -23,7 +23,7 @@ namespace HttpServer.Library
     {
         private Log _logger;
         private Route _route;
-        
+
         // Конструктор класса. Ему нужно передавать принятого клиента от TcpListener
         public Client(TcpClient client)
         {
@@ -42,6 +42,8 @@ namespace HttpServer.Library
             // Парсим строку запроса с использованием регулярных выражений
             // При этом отсекаем все переменные GET-запроса
             Match reqMatch = Regex.Match(request, @"^\w+\s+([^\s\?]+)[^\s]*\s+HTTP/.*|");
+            //---------------
+            bool isJson = request.IsJsonRequest(); // if(isJson) { do something with JSON }
 
             if (reqMatch == Match.Empty)
             {
@@ -105,36 +107,9 @@ namespace HttpServer.Library
             }
             // Получаем расширение файла из строки запроса
             string extension = requestUri.Substring(requestUri.LastIndexOf('.'));
-            // Тип содержимого
-            string contentType = string.Empty;
-            // Пытаемся определить тип содержимого по расширению файла
-            switch (extension)
-            {
-                case ".htm":
-                case ".html":
-                    contentType = "text/html";
-                    break;
-                case ".css":
-                    contentType = "text/stylesheet";
-                    break;
-                case ".js":
-                    contentType = "text/javascript";
-                    break;
-                case ".jpg":
-                    contentType = "image/jpeg";
-                    break;
-                case ".jpeg":
-                case ".png":
-                case ".gif":
-                    contentType = "image/" + extension.Substring(1);
-                    break;
-                default:
-                    if (extension.Length > 1)
-                        contentType = "application/" + extension.Substring(1);
-                    else
-                        contentType = "application/unknown";
-                    break;
-            }
+
+            string contentType = this.DetectTypeByExtension(extension);
+
             FileStream fileStream;
             try
             {
@@ -210,6 +185,34 @@ namespace HttpServer.Library
             client.GetStream().Write(buffer, 0, buffer.Length);
             // Закроем соединение
             client.Close();
+        }
+
+        private string DetectTypeByExtension(string extension)
+        {
+            // Тип содержимого
+            string contentType = string.Empty;
+            // Пытаемся определить тип содержимого по расширению файла
+            switch (extension)
+            {
+                case ".htm":
+                case ".html":
+                    return contentType = "text/html";
+                case ".css":
+                    return contentType = "text/stylesheet";
+                case ".js":
+                    return contentType = "text/javascript";
+                case ".jpg":
+                    return contentType = "image/jpeg";
+                case ".jpeg":
+                case ".png":
+                case ".gif":
+                    return contentType = "image/" + extension.Substring(1);
+                default:
+                    if (extension.Length > 1)
+                        return contentType = "application/" + extension.Substring(1);
+                    else
+                        return contentType = "application/unknown";
+            }
         }
 
         #region Methods for work with console

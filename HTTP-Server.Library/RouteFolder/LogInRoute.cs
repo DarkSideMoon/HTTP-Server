@@ -22,6 +22,11 @@ namespace HttpServer.Library.RouteFolder
         {
         }
 
+        public string Post(User user)
+        {
+            return user.Email + " " + user.Password;
+        }
+
         protected override void SendResponse()
         {
             string _path = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
@@ -57,11 +62,6 @@ namespace HttpServer.Library.RouteFolder
             Route.Client.GetStream().Write(buffer, 0, buffer.Length);
             // Закроем соединение
             Route.Client.Close();
-        }
-
-        public string Post(User user)
-        {
-            return user.Email + " " + user.Password;
         }
     }
 }

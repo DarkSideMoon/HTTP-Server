@@ -9,14 +9,14 @@ using HttpServer.Library.ResponseServer;
 
 namespace HttpServer.Library.RouteFolder
 {
-    public class MainPageRoute : Route
+    public class RegistrationRoute : Route
     {
-        public MainPageRoute(string path, TcpClient client)
+        public RegistrationRoute(string path, TcpClient client)
             : base(path, client)
         {
         }
 
-        public MainPageRoute()
+        public RegistrationRoute()
             : base()
         {
         }
@@ -24,7 +24,7 @@ namespace HttpServer.Library.RouteFolder
         protected override void SendResponse()
         {
             string _path = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-            string _pathToFolder = _path + "\\Website\\Pages\\Main.html";
+            string _pathToFolder = _path + "\\Website\\Pages\\Registration.html";
             string htmlPage = string.Empty;
 
             using (System.IO.StreamReader reader = new System.IO.StreamReader(_pathToFolder))
