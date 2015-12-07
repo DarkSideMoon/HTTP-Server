@@ -82,6 +82,11 @@ namespace HttpServer.Library
             set { this._state = value; }
         }
 
+        public void Work()
+        {
+            // the server is start and working now :)
+        }
+
         private static void ClientThread(object stateInfo)
         {
             new Client((TcpClient)stateInfo);

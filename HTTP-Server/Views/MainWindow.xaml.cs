@@ -52,7 +52,7 @@ namespace HttpServer
         private void StartServer(object port)
         {
             Server server = new Server((int)port);
-            //State state = server.State;
+            server.Work();
         }
     }
 }
