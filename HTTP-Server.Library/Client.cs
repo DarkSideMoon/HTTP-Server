@@ -14,7 +14,10 @@ using HttpServer.Library.RouteFolder;
 
 // return json, html, xml
 // asp.net mvc
-
+// 1. Pattern question about Factory Method
+// 2. Ajax question (show information in fiddler)
+// 3. Appveyor question (not build solution)
+// 4. Error with parse JSON in class ExtensionMethods.cs
 namespace HttpServer.Library
 {
     // HTTP-server (state,builder,factory method, mediator, composite)
@@ -43,7 +46,7 @@ namespace HttpServer.Library
             // При этом отсекаем все переменные GET-запроса
             Match reqMatch = Regex.Match(request, @"^\w+\s+([^\s\?]+)[^\s]*\s+HTTP/.*|");
             //---------------
-            bool isJson = request.IsJsonRequest(); // if(isJson) { do something with JSON }
+            bool isJson = request.IsJson(); // if(isJson) { do something with JSON }
 
             if (reqMatch == Match.Empty)
             {

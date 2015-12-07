@@ -11,7 +11,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: #EFEFEF url(images\\main-bg.jpg) repeat;
+            background: #EFEFEF url(../Images/main-bg.jpg) repeat;
             font-family: 'Arvo', serif;
             font-size: 14px;
             color: #000000;
@@ -49,6 +49,14 @@
             color: #091478;
         }
 
+/* List */
+
+	    ul {
+            font-size: 1.3em;
+		    list-style: none;
+            color: #246D73;
+	    }
+/* List */
         #header {
             width: 940px;
             height: 150px;
@@ -210,9 +218,136 @@
             border-top: 1px solid #D4D4D4;
             border-bottom: 1px solid #D4D4D4;
         }
+
+         #main {
+            overflow: hidden;
+            width: 1000px;
+            margin: 0px auto;
+            padding: 15px 0px;
+            border-top: 1px solid #D4D4D4;
+            border-bottom: 1px solid #D4D4D4;
+        }
+
+         .link-style {
+	            display: inline-block;
+                margin-left: 5px;
+                margin-right: 5px;
+	            margin-top: 5px;
+	            padding: 8px 20px;
+	            background: #83003E;
+                font-size: 16px;
+                text-decoration: none;
+                text-align: center;
+	            color: #FFFFFF;
+
+            }
+
+         .center {
+            margin: auto;
+            width: 56%;
+            border:3px solid #735C9E;
+            padding: 10px;
+         }
+
+         .link-style .first {
+             margin-left: 0px;
+         }
+
+         .link-style .last {
+             margin-left: 0px;
+         }
+
+         /* Footer */
+
+            #footer {
+	            overflow: hidden;
+	            width: 1000px;
+	            height: 200px;
+	            margin: 0 auto;
+	            padding: 40px 0 15px 0;
+            }
+
+            #footer p {
+	            margin: 0;
+	            padding-top: 20px;
+	            line-height: normal;
+	            text-align: center;
+	            color: #000000;
+            }
+
+            #footer a {
+	            color: #000000;
+            }
     </style>
+
+    <script type="text/javascript" src="../Scripts/jquery-2.1.4.min.js"></script>
+    <script>
+
+    </script>
 </head>
 <body>
-    <p><i>Hello in the main page my friend! :)</i></p>
+    <div id="wrapper">
+        <div id="header">
+            <div id="logo">
+                <h1><a href="#">Adrin server</a></h1>
+            </div>
+        </div>
+        <div id="menu">
+            <ul>
+                <li class="current_page_item"><a href="#">Main</a></li>
+                <li><a href="/getWeather/Kiev">Weather</a></li>
+                <li><a href="/getIp/">Ip info</a></li>
+                <li><a href="/getJson/">Json</a></li>
+                <li class="last"><a href="/exit/">Exit</a></li>
+            </ul>
+        </div>
+        <div id="banner">
+            <img src="../Images/Adrin.png" align="right" alt="альтернативный текст">
+            <div id="welcome">
+                <h2 class="title">Welcome User to Adrin server</h2>
+                <div class="entry">
+                    <p>
+                        This is <strong>Magnetic </strong>, a free, fully standards-compliant CSS template designed by
+                        <a href="http://www.freecsstemplates.org">FCT</a>.  The photo used in this template is from
+                        <a href="http://fotogrph.com/">Fotogrph</a>.  This free template is released under a Creative Commons Attributions 3.0
+                        license, so you’re pretty much free to do whatever you want with it (even use it commercially)
+                        provided you keep the links in the footer intact. Aside from that, have fun with it :)
+                    </p>
+                </div>
+            </div>
+
+            <div class="center">
+                <a href="#" class="link-style">Read More</a>
+                <a href="#" class="link-style">Read More</a>
+                <a href="#" class="link-style">Read More</a>
+                <a href="#" class="link-style">Read More</a>
+            </div>
+        </div>
+
+        <div id="main">
+            <h2>User information</h2>
+            <div class="entry">
+                <div class="navbar-custom">
+                    <ul>
+                        <li>Name: </li>
+                        <li>Age: </li>
+                        <li>Mobile phone: </li>
+                        <li>Email: </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="main">
+            <h2>Users online</h2>
+            <div class="navbar-custom">
+                <ul>
+                    <li>First user info: </li>
+                    <li>Second user info: </li>
+                    <li>Third user info: </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

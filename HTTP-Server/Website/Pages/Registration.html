@@ -3,8 +3,9 @@
 <head>
 
 	<meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-	<title>Login</title>
+	<title>Registration</title>
 
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Varela+Round">
 	<style type="text/css">
@@ -116,8 +117,61 @@
 		}
 	</style>
 
-    <script type="text/javascript" src="Scripts/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-2.1.4.min.js"></script>
     <script>
+        $(document).ready(function () {
+            $("#regist").submit(function (e) {
+                e.preventDefault();
+                var userNew = new Object();
+                userNew.name = $("#name").val();
+                userNew.age = $("#age").val();
+                userNew.email = $("#email").val();
+                userNew.phone = $("#phone").val();
+                userNew.password = $("#password").val();
+
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://127.0.0.1/registration/",
+                    data: $("#regist").serialize(),
+                            
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (!Notification) {
+                            alert('Desktop notifications not available in your browser. Try Chromium.');
+                            return;
+                        }
+
+                        if (Notification.permission !== "granted")
+                            Notification.requestPermission();
+                        else {
+                            var notification = new Notification('Hello !!!', {
+                                icon: 'http://127.0.0.1/Images/Adrin.png',
+                                body: "Hey there! You've been notified that registrated on server!",
+                            });
+
+                            notification.onclick = function () {
+                                window.open("http://127.0.0.1");
+                            };
+
+                        }
+                    }
+                });
+
+                $.post('http://127.0.0.1/registration/', userNew, function () {
+                    console.log(userNew.email);
+                    console.log(userNew.password);
+                    console.log(userNew.name);
+                    console.log(userNew.age);
+                    console.log(userNew.phone);
+                });
+                //window.location.replace("http://127.0.0.1"); -- redirect on other page
+
+            });
+        });
+
         function notifyMe() {
             if (!Notification) {
                 alert('Desktop notifications not available in your browser. Try Chromium.');
@@ -127,7 +181,7 @@
             if (Notification.permission !== "granted")
                 Notification.requestPermission();
             else {
-                var notification = new Notification('Hello my friend, name of the user', {
+                var notification = new Notification('Hello !!!', {
                     icon: 'http://127.0.0.1/Images/Adrin.png',
                     body: "Hey there! You've been notified that registrated on server!",
                 });
@@ -145,18 +199,18 @@
 <body>
 	<div id='container'>
   <div class='signup'>
-     <form>
-       <input type='text' placeholder='Name:'  />
-       <input type='text' placeholder='Age:'  />
-       <input type='text' placeholder='Email:'  />
-       <input type='text' placeholder='Phone:'  />
-       <input type='password' placeholder='Password:' />
-       <input type='submit' placeholder='SUBMIT' onclick="notifyMe()"/>
-     </form>
+      <form id="regist" action="javascript:void(0);" method="POST">
+          <input type='text' id="name" placeholder='Name:' value="Pasha" />
+          <input type='text' id="age" placeholder='Age:' value="19" />
+          <input type='text' id="email" placeholder='Email:' value="shark00235@i.ua" />
+          <input type='text' id="phone" placeholder='Phone:'  value="+380123122132"/>
+          <input type='password' id="password" placeholder='Password:' value="123456" />
+          <input type='submit' id="sumbit" placeholder='SUBMIT' />
+      </form>
   </div>
   <div class='whysign'>
     <h1>Welcome to Adrin</h1>
-    <p>This is simple server that can do a lot of cool things. </br>
+    <p>This is simple server that can do a lot of cool things. <br>
     	The server is writing using defferent technologies</p>
     <p>Technologies: 
       <span>.Net</span> 

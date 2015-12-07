@@ -47,7 +47,8 @@ namespace HttpServer.Library
             this.SetConsoleColor(ConsoleColor.Green);
             Console.WriteLine("The server is started! Address: " + client.Client.LocalEndPoint.ToString());
             this.ResetConsoleColor();
-             while (true)
+
+            while (true)
                   ThreadPool.QueueUserWorkItem(new WaitCallback(ClientThread), this._listener.AcceptTcpClient());
 
             // Create new thread

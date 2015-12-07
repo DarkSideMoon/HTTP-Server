@@ -10,30 +10,54 @@ namespace HttpServer.Library
 {
     public static class ExtensionMethods
     {
+        //public static string JsonRequest = string.Empty;
         public static bool IsJsonRequest(this string jsonString)
         {
             bool res = false;
-            //string[] lines = jsonString.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            string[] lines = System.Text.RegularExpressions.Regex.Split(jsonString, @"(?:\r\n){1,}");
+            string ajaxReques = string.Copy(jsonString);
+
+            string[] lines = ajaxReques.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
 
             // 12 line is line with json string
             try
             {
-                try
-                {
-                    var obj = JObject.Parse(lines[12]);
-                }
-                catch (Newtonsoft.Json.JsonReaderException)
-                {
-                    // exception in parsing json => the jsonString is not json!
-                    return false;
-                }
+                string json = lines[13];
+
+                // После первого прохода конвертирует к таокму виду => email=mail%40address.com&password=765479
+                // После чего второй проход уже ошибка выбивает
+                var obj = JObject.Parse(json);
+
+                // 9
+                string s1 = string.Copy(ajaxReques);
+                string s2 = string.Concat(ajaxReques, "\r\nTEST STRING", "\r\nTEST-TEST-TEST-TEST");
             }
             catch (IndexOutOfRangeException)
             {
                 res = false;
             }
+            catch (Newtonsoft.Json.JsonReaderException)
+            {
+                // exception in parsing json => the jsonString is not json!
+                return false;
+            }
             return res;
+        }
+
+        public static bool IsJson(this string json)
+        {
+            //string json = string.Empty;
+            //string[] lines = input.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+
+            //try
+            //{
+            //    json = lines[13];
+            //}
+            //catch(IndexOutOfRangeException)
+            //{
+            //    return false;
+            //}
+            json = json.Trim();
+            return (json.StartsWith("{") && json.EndsWith("}")) || (json.StartsWith("[") && json.EndsWith("]"));
         }
 
         #region Unuseful
