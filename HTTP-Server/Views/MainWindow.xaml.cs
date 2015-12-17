@@ -32,6 +32,8 @@ namespace HttpServer
         private void Inialize()
         {
             listHosts.Items.Add("127.0.0.1");
+            if (checkIsStart.IsChecked.Value == true)
+                this.Start();
         }
 
         private void MainGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -40,6 +42,11 @@ namespace HttpServer
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
+        {
+            this.Start();
+        }
+
+        private void Start()
         {
             int maxThreadsCount = Environment.ProcessorCount * 4;
             ThreadPool.SetMaxThreads(maxThreadsCount, maxThreadsCount);

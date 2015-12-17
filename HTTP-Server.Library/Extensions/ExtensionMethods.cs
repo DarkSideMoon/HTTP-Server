@@ -17,14 +17,10 @@ namespace HttpServer.Library
             string ajaxReques = string.Copy(jsonString);
 
             string[] lines = ajaxReques.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-
-            // 12 line is line with json string
             try
             {
                 string json = lines[13];
 
-                // После первого прохода конвертирует к таокму виду => email=mail%40address.com&password=765479
-                // После чего второй проход уже ошибка выбивает
                 var obj = JObject.Parse(json);
 
                 // 9
@@ -43,21 +39,21 @@ namespace HttpServer.Library
             return res;
         }
 
-        public static bool IsJson(this string json)
+        public static bool IsJson(this string input)
         {
-            //string json = string.Empty;
-            //string[] lines = input.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            string ajaxReques = string.Copy(input);
+            string[] lines = ajaxReques.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
 
-            //try
-            //{
-            //    json = lines[13];
-            //}
-            //catch(IndexOutOfRangeException)
-            //{
-            //    return false;
-            //}
-            json = json.Trim();
-            return (json.StartsWith("{") && json.EndsWith("}")) || (json.StartsWith("[") && json.EndsWith("]"));
+            try
+            { 
+                input = lines[13].Trim();
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            } 
+            return input.StartsWith("{") && input.EndsWith("}")
+                   || input.StartsWith("[") && input.EndsWith("]");
         }
 
         #region Unuseful

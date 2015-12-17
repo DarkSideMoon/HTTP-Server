@@ -29,7 +29,7 @@ namespace HttpServer.Library
 
         public Server(int port)
         {
-            //this._logger = new MessageLogger("MessageLogger");
+            this._logger = new MessageLogger("MessageLogger");
             this._listener = new TcpListener(IPAddress.Any, port);
             this._listener.Start();
 
@@ -39,14 +39,15 @@ namespace HttpServer.Library
             this.ResetConsoleColor();
             Console.WriteLine("Current Time: " + DateTime.Now.ToString());
 
-            //this._logger.WriteMessage("The server is starting", Log.MessageType.Info);
-
             // Get new client
-            TcpClient client = this._listener.AcceptTcpClient();
+            TcpClient _client = this._listener.AcceptTcpClient();
 
             this.SetConsoleColor(ConsoleColor.Green);
-            Console.WriteLine("The server is started! Address: " + client.Client.LocalEndPoint.ToString());
+            Console.WriteLine("The server is started! Address: " + _client.Client.LocalEndPoint.ToString());
             this.ResetConsoleColor();
+
+            this._logger.WriteMessage("The server is starting! Address : " + _client.Client.LocalEndPoint.ToString(), Log.MessageType.Info);
+
 
             while (true)
                   ThreadPool.QueueUserWorkItem(new WaitCallback(ClientThread), this._listener.AcceptTcpClient());
@@ -56,7 +57,7 @@ namespace HttpServer.Library
             // Start new thread with getting client
             //thread.Start(client);
 
-            //thread.Join();
+            //thread.Join(); handlers tornado  
         }
 
         // Остановка сервера

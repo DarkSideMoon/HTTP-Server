@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HttpServer.Library;
+using HttpServer.Library.ClientLogic;
 
 namespace HttpServer.Console
 {
@@ -11,7 +11,13 @@ namespace HttpServer.Console
     {
         public static void Main(string[] args)
         {
-            Server server = new Server(80);
+            Token token = new Token();
+
+            System.Console.WriteLine(token.TokenString);
+
+            System.Threading.Thread.Sleep(new TimeSpan(0, 1, 0));
+
+            System.Console.WriteLine(token.TokenString);
 
             System.Console.ReadLine();
         }

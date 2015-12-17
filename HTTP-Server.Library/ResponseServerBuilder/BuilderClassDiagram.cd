@@ -1,24 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Pattern implement without director.&#xD;&#xA;The director plays different classes in solution">
+    <Position X="9.367" Y="0.5" Height="0.85" Width="2.05" />
+  </Comment>
   <Class Name="HttpServer.Library.ResponseServer.Response" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="2" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAQMBAAAABAAAAAAAAABAAIAAwAAAAAAE=</HashCode>
-      <FileName>ResponseServer\Response.cs</FileName>
+      <HashCode>AAQAAAAAAAAAQMBAAAABAAAAAAAABBAAIAAwAAAAAAE=</HashCode>
+      <FileName>ResponseServerBuilder\Response.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="HttpServer.Library.ResponseServer.PageBuilder" Collapsed="true">
     <Position X="4.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEBAAAAAAAgAAAAEAAAAAAAAAAAAAAAIAAAAABAkAA=</HashCode>
-      <FileName>ResponseServer\PageBuilder.cs</FileName>
+      <HashCode>AAEBAAAAAAAgAAAAEAAAAAAAAAAAAAAAIAAAAABAAAA=</HashCode>
+      <FileName>ResponseServerBuilder\PageBuilder.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="HttpServer.Library.ResponseServer.ResponseBuilder" Collapsed="true">
     <Position X="5.75" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEBAEACAABgAAAAEAAAAAAAAAAAAIAAIAAAAABAAAA=</HashCode>
-      <FileName>ResponseServer\ResponseBuilder.cs</FileName>
+      <FileName>ResponseServerBuilder\ResponseBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HttpServer.Library.ResponseServer.JsonBuilder" Collapsed="true">
+    <Position X="6.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEBAAAAAAAgAAAAEAAAAAAAAAAAAAAAIAAAAABAAAA=</HashCode>
+      <FileName>ResponseServerBuilder\JsonBuilder.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -8,52 +8,64 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+
 using HttpServer.Library.Logger;
 using HttpServer.Library.ResponseServer;
 using HttpServer.Library.RouteFolder;
+using HttpServer.Library.StateServer;
+using HttpServer.Library.MediatorClient;
+using HttpServer.Library.ClientLogic;
 
-// return json, html, xml
-// asp.net mvc
-// 1. Pattern question about Factory Method
-// 2. Ajax question (show information in fiddler)
-// 3. Appveyor question (not build solution)
-// 4. Error with parse JSON in class ExtensionMethods.cs
 namespace HttpServer.Library
 {
+    #region Feature List
     // HTTP-server (state,builder,factory method, mediator, composite)
     // Authentication Basic Digest
+    // Cookies authentication
+    // Give the permanent time to auth
+    #endregion
     public class Client
     {
+        #region Fields
         private Log _logger;
         private Route _route;
+        private FileStream fileStream;
+        private Mediator _mediator;
+        private State _stateError;
+        private User _user;
 
+        private string request;
+        private byte[] buffer;
+        private int count;
+        #endregion
+
+        #region Constructor
         // Конструктор класса. Ему нужно передавать принятого клиента от TcpListener
         public Client(TcpClient client)
         {
-            this._logger = new ResponseLogger("ResponseLogger");
+            this.Initialize(client);
 
-            string request = string.Empty;
-            byte[] buffer = new byte[2048]; //1024
-            int count;
-
-            while ((count = client.GetStream().Read(buffer, 0, buffer.Length)) > 0)
+            while ((this.count = client.GetStream().Read(this.buffer, 0, this.buffer.Length)) > 0)
             {
-                request += Encoding.ASCII.GetString(buffer, 0, count);
-                if (request.IndexOf("\r\n\r\n") >= 0 || request.Length > 4096)
+                this.request += Encoding.ASCII.GetString(this.buffer, 0, this.count);
+                if (this.request.IndexOf("\r\n\r\n") >= 0 || this.request.Length > 4096)
                     break;
             }
+            
+            // CHECK COOKIES FOR USER INSTANCE -------------
+
             // Парсим строку запроса с использованием регулярных выражений
             // При этом отсекаем все переменные GET-запроса
-            Match reqMatch = Regex.Match(request, @"^\w+\s+([^\s\?]+)[^\s]*\s+HTTP/.*|");
-            //---------------
-            bool isJson = request.IsJson(); // if(isJson) { do something with JSON }
+            Match reqMatch = Regex.Match(this.request, @"^\w+\s+([^\s\?]+)[^\s]*\s+HTTP/.*|");
+
+            if(this.request.IsJson())
+            {
+                _user = _user.RegistrationUser(this.request);
+            }
 
             if (reqMatch == Match.Empty)
             {
-                this.SetConsoleColor(ConsoleColor.Red);
-                Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 400);
-                this.ResetConsoleColor();
-
+                this.WriteConsoleMessage(client, 400);
                 //this._logger.WriteMessage(client, 400);
                 this.SendError(client, 400);
                 return;
@@ -70,8 +82,6 @@ namespace HttpServer.Library
                 this._route.Send(this._route.Action);
                 return;
             }
-            // **********************Routing URL**********************
-
             // Приводим ее к изначальному виду, преобразуя экранированные символы
             // Например, "%20" -> " "
             requestUri = Uri.UnescapeDataString(requestUri);
@@ -80,75 +90,62 @@ namespace HttpServer.Library
             // Это нужно для защиты от URL типа http://example.com/../../file.txt
             if (requestUri.IndexOf("..") >= 0)
             {
-                this.SetConsoleColor(ConsoleColor.Red);
-                Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 400);
-                this.ResetConsoleColor();
-
+                this.WriteConsoleMessage(client, 400);
                 //this._logger.WriteMessage(client, 400);
                 this.SendError(client, 400);
                 return;
             }
-
             // Если строка запроса оканчивается на "/", то добавим к ней index.html
             if (requestUri.EndsWith("/"))
-            {
                 requestUri += "index.html";
-            }
 
+            // Find the path of the directory then website is hosting
             string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
             string _pathToFolder = wanted_path + "\\Website" + requestUri;
 
             if (!File.Exists(_pathToFolder))
             {
-                this.SetConsoleColor(ConsoleColor.Red);
-                Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 404);
-                this.ResetConsoleColor();
-
+                this.WriteConsoleMessage(client, 404);
                 //this._logger.WriteMessage(client, 404);
-                this.SendError(client, 404);
+                this._mediator.Send(404, this._stateError); // Null reference exception
+                //this.SendError(client, 404);
                 return;
             }
             // Получаем расширение файла из строки запроса
             string extension = requestUri.Substring(requestUri.LastIndexOf('.'));
-
             string contentType = this.DetectTypeByExtension(extension);
 
-            FileStream fileStream;
             try
             {
-                fileStream = new FileStream(_pathToFolder, FileMode.Open, FileAccess.Read, FileShare.Read);
+                this.fileStream = new FileStream(_pathToFolder, FileMode.Open, FileAccess.Read, FileShare.Read);
             }
             catch (Exception)
             {
-                this.SetConsoleColor(ConsoleColor.Red);
-                Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + 500);
-                this.ResetConsoleColor();
-
+                this.WriteConsoleMessage(client, 500);
                 //this._logger.WriteMessage(client, 500);
                 this.SendError(client, 500);
                 return;
             }
             // Посылаем заголовки
-            string headers = "HTTP/1.1 200 OK\nContent-Type: " + contentType + "\nContent-Length: " + fileStream.Length + "\n\n";
+            string headers = "HTTP/1.1 200 OK\nContent-Type: " + contentType + "\nContent-Length: " + this.fileStream.Length + "\n\n";
             byte[] headersBuffer = Encoding.ASCII.GetBytes(headers);
             client.GetStream().Write(headersBuffer, 0, headersBuffer.Length);
 
-            //this._logger.WriteMessage(client, 200);
+            // this._logger.WriteMessage(client, 200);
             // Пока не достигнут конец файла
-            while (fileStream.Position < fileStream.Length)
+            while (this.fileStream.Position < this.fileStream.Length)
             {
                 // Читаем данные из файла
-                count = fileStream.Read(buffer, 0, buffer.Length);
+                this.count = this.fileStream.Read(this.buffer, 0, this.buffer.Length);
                 // И передаем их клиенту
-                client.GetStream().Write(buffer, 0, count);
+                client.GetStream().Write(this.buffer, 0, this.count);
             }
             // Закроем файл и соединение
-            fileStream.Close();
+            this.fileStream.Close();
             client.Close();
         }
+        #endregion
 
-        // Отправка страницы с ошибкой
-        // Убрать в класс State Error !!!!!!!!!!!!
         private void SendError(TcpClient client, int code)
         {
             string codeStr = code.ToString() + " " + ((HttpStatusCode)code).ToString();
@@ -190,6 +187,23 @@ namespace HttpServer.Library
             client.Close();
         }
 
+        #region Server Methods
+        private void Initialize(TcpClient client)
+        {
+            // Initialize classes
+            this._user = new User();
+
+            this._mediator = new ClientMediator();
+            this._mediator.Client = client;
+            this._stateError = new HttpError(this._mediator);
+
+            this._logger = new ResponseLogger("ResponseLogger");
+
+            // Initialize varianles
+            this.request = string.Empty;
+            this.buffer = new byte[2048]; //1024
+        }
+
         private string DetectTypeByExtension(string extension)
         {
             // Тип содержимого
@@ -217,9 +231,15 @@ namespace HttpServer.Library
                         return contentType = "application/unknown";
             }
         }
+        #endregion
 
         #region Methods for work with console
-
+        private void WriteConsoleMessage(TcpClient client, int errorNumb)
+        {
+            this.SetConsoleColor(ConsoleColor.Red);
+            Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + errorNumb);
+            this.ResetConsoleColor();
+        }
         private void SetConsoleColor(ConsoleColor color)
         {
             Console.ForegroundColor = color;
@@ -229,7 +249,6 @@ namespace HttpServer.Library
         {
             Console.ForegroundColor = ConsoleColor.White;
         }
-
         #endregion
     }
 }

@@ -129,16 +129,16 @@
                 userNew.phone = $("#phone").val();
                 userNew.password = $("#password").val();
 
-
+                var dataToSend = JSON.stringify($('#regist').serializeArray());
 
                 $.ajax({
                     type: "POST",
-                    url: "http://127.0.0.1/registration/",
-                    data: $("#regist").serialize(),
+                    url: "http://127.0.0.1/newUser/",
+                    data: dataToSend,
                             
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function (data) {
+                    success: function () {
                         if (!Notification) {
                             alert('Desktop notifications not available in your browser. Try Chromium.');
                             return;
@@ -159,16 +159,6 @@
                         }
                     }
                 });
-
-                $.post('http://127.0.0.1/registration/', userNew, function () {
-                    console.log(userNew.email);
-                    console.log(userNew.password);
-                    console.log(userNew.name);
-                    console.log(userNew.age);
-                    console.log(userNew.phone);
-                });
-                //window.location.replace("http://127.0.0.1"); -- redirect on other page
-
             });
         });
 
@@ -200,11 +190,11 @@
 	<div id='container'>
   <div class='signup'>
       <form id="regist" action="javascript:void(0);" method="POST">
-          <input type='text' id="name" placeholder='Name:' value="Pasha" />
-          <input type='text' id="age" placeholder='Age:' value="19" />
-          <input type='text' id="email" placeholder='Email:' value="shark00235@i.ua" />
-          <input type='text' id="phone" placeholder='Phone:'  value="+380123122132"/>
-          <input type='password' id="password" placeholder='Password:' value="123456" />
+          <input type='text' id="name" name="name" placeholder='Name:' value="Pasha" />
+          <input type='text' id="age" name="age" placeholder='Age:' value="19" />
+          <input type='text' id="email" name="email" placeholder='Email:' value="shark00235@i.ua" />
+          <input type='text' id="phone" name="phone" placeholder='Phone:'  value="+380123122132"/>
+          <input type='password' id="password" name="password" placeholder='Password:' value="123456" />
           <input type='submit' id="sumbit" placeholder='SUBMIT' />
       </form>
   </div>

@@ -3,71 +3,78 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace HttpServer.Library.ClientLogic
 {
     public class User
     {
-        private static List<User> _usersOnline = new List<User>();
+        private static List<User> _usersInSystem = new List<User>();
         private static List<User> _banUsers = new List<User>();
+
 
         public User()
         {
-            this.LoadOnlineUsers();
-            this.LoadBanUsers();
         }
 
+        public Token MyToken { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
         public string Phone { get; set; }
 
-        public void AddBanUser(User user)
+        public List<User> Users
         {
-            _banUsers.Add(user);
+            get { return _usersInSystem; }
         }
 
-        public void DelBanUser(User user)
+        public User RegistrationUser(string input)
         {
-            _banUsers.Remove(user);
+            string[] lines = input.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            string js = lines[13].Trim();
+
+            string resultJs = js.Remove(0, 1).Remove(js.Length - 2, 1);
+            dynamic json = (JArray)JsonConvert.DeserializeObject(js);
+
+            // 5 items in array 
+            // Value 
+            // Name 
+            // [{"name":"name","value":"Pasha"},
+            // {"name":"age","value":"19"},
+            // {"name":"email","value":"shark00235@i.ua"},
+            // {"name":"phone","value":"+380123122132"},
+            // {"name":"password","value":"123456"}]
+
+            User user = new User()
+            {
+                Name = json[0]["value"],
+                Age = json[1]["value"],
+                Email = json[2]["value"],
+                Phone = json[3]["value"],
+                Password = json[4]["value"],
+                
+                MyToken = new Token()
+            };
+            _usersInSystem.Add(user);
+
+            return user;
         }
 
-        public List<User> GetBanUsers()
+        public bool LogIn(string input)
         {
-            return _banUsers;
-        }
+            if(this.MyToken.TokenString == input)
+                return true;
 
-        // Send push notification on mobile that is new user entered in your server cool and awesome
-        public void AddOnlineUser(User user)
-        {
-            _usersOnline.Add(user);
-        }
-
-        public void DelOnlineUser(User user)
-        {
-            _usersOnline.Remove(user);
-        }
-
-        public List<User> GetUsersOnline()
-        {
-            return _usersOnline;
-        }
-
-        private void LoadOnlineUsers()
-        {
-            this.AddBanUser(new User() { Name = "Pasha", Age = 19, Email = "shark005@i.ua", Phone = "123-4124-214" });
-            this.AddBanUser(new User() { Name = "Vlad", Age = 19, Email = "vllad214@i.ua", Phone = "49824-214" });
-            this.AddBanUser(new User() { Name = "Sasha", Age = 16, Email = "234saf@i.ua", Phone = "41251" });
-            this.AddBanUser(new User() { Name = "Dan", Age = 17, Email = "123fva@i.ua", Phone = "591-251-54" });
-            this.AddBanUser(new User() { Name = "Vasya", Age = 18, Email = "wer2@i.ua", Phone = "9582-00-87" });
-            this.AddBanUser(new User() { Name = "Invisible man", Age = 19, Email = "agv2@i.ua", Phone = "1240-2856-22" });
-        }
-
-        private void LoadBanUsers()
-        {
-            this.AddBanUser(new User() { Name = "Petro", Age = 30, Email = "sasdlfj@i.ua", Phone = "1242" });
-            this.AddBanUser(new User() { Name = "Metro", Age = 30, Email = "slk;jfdi@i.ua", Phone = "49862" });
+            foreach (var item in _usersInSystem)
+                if (item.Name == input && item.Password == input)
+                {
+                    item.MyToken = new Token();
+                    return true;
+                }
+            return false;
         }
     }
 }

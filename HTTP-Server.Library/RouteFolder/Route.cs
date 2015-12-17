@@ -17,7 +17,9 @@ namespace HttpServer.Library.RouteFolder
             { 2, "getIp" },
             { 3, "getJson" },
             { 4, "logIn" },
-            { 5, "registration" }
+            { 5, "registration" },
+            { 6, "newUser" },
+            { 7, "signIn" }
         };
 
         public Route()
@@ -33,6 +35,7 @@ namespace HttpServer.Library.RouteFolder
                 Client = client;
                 Value = newRoute[2];
                 this.Action = newRoute[1];
+                
 
                 this.FindRoute();
             }
@@ -66,6 +69,12 @@ namespace HttpServer.Library.RouteFolder
                     new LogInRoute().SendResponse();
                     break;
                 case "registration":
+                    new RegistrationRoute().SendResponse();
+                    break;
+                case "newUser":
+                    new LogInRoute().SendResponse();
+                    break;
+                case "signIn":
                     new RegistrationRoute().SendResponse();
                     break;
                 default:

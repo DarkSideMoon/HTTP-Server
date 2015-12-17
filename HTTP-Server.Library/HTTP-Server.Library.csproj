@@ -39,6 +39,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,12 +49,14 @@
     <Reference Include="WeatherLibrary">
       <HintPath>..\External\lib\WeatherLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfoVersion.cs">
       <Link>Properties\AssemblyInfoVersion.cs</Link>
     </Compile>
     <Compile Include="Client.cs" />
+    <Compile Include="ClientLogic\Token.cs" />
     <Compile Include="ClientLogic\User.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
     <Compile Include="FactoryMethod\FormatManager.cs" />
@@ -62,7 +66,10 @@
     <Compile Include="FactoryMethod\XmlFormat.cs" />
     <Compile Include="IpConfig\IpConfig.cs" />
     <Compile Include="IpConfig\IpInfoData.cs" />
+    <Compile Include="MediatorClient\ClientMediator.cs" />
+    <Compile Include="MediatorClient\Mediator.cs" />
     <Compile Include="Quote.cs" />
+    <Compile Include="ResponseServerBuilder\JsonBuilder.cs" />
     <Compile Include="ResponseServerBuilder\PageBuilder.cs" />
     <Compile Include="ResponseServerBuilder\Response.cs" />
     <Compile Include="ResponseServerBuilder\ResponseBuilder.cs" />
@@ -88,9 +95,7 @@
     <None Include="ResponseServerBuilder\BuilderClassDiagram.cd" />
     <None Include="StateServer\StateClassDiagram.cd" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PushNotification\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

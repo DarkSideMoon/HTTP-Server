@@ -17,6 +17,12 @@
             color: #000000;
         }
 
+        span {
+            color: #83003E;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
         h1, h2, h3 {
             margin: 0;
             padding: 0;
@@ -47,6 +53,16 @@
         a {
             text-decoration: none;
             color: #091478;
+        }
+
+        #panel {
+            padding: 10px;
+            display: none;
+        }
+
+        #panel2 {
+            padding: 10px;
+            display: none;
         }
 
 /* List */
@@ -228,6 +244,15 @@
             border-bottom: 1px solid #D4D4D4;
         }
 
+        #main2 {
+            overflow: hidden;
+            width: 1000px;
+            margin: 0px auto;
+            padding: 10px 0px;
+            border-top: 1px solid #D4D4D4;
+            border-bottom: 1px solid #D4D4D4;
+        }
+
          .link-style {
 	            display: inline-block;
                 margin-left: 5px;
@@ -257,6 +282,8 @@
              margin-left: 0px;
          }
 
+         a.menu_links { cursor: pointer; }
+
          /* Footer */
 
             #footer {
@@ -282,7 +309,36 @@
 
     <script type="text/javascript" src="../Scripts/jquery-2.1.4.min.js"></script>
     <script>
+        $(document).ready(function () {
+            $("#flip").click(function () {
+                $('#panel').slideToggle('slow', function () {
+                    $('#info').text(
+                      $(this).is(':visible') ? "User Information [hide]" : "User Information [show]"
+                    );
+                });
+            });
 
+            $("#flip2").click(function () {
+                $('#panel2').slideToggle('slow', function () {
+                    $('#info2').text(
+                      $(this).is(':visible') ? "Cookies [hide]" : "Cookies [show]"
+                    );
+                });
+            });
+
+
+
+            var user = new Object();
+            user.name = 'Pasha';
+            user.age = 19;
+            user.phone = '1231234';
+            user.email = 'shark@i.ua';
+
+            document.getElementById("name").innerHTML = user.name;
+            document.getElementById("age").innerHTML = user.age;
+            document.getElementById("phone").innerHTML = user.phone;
+            document.getElementById("email").innerHTML = user.email;
+        });
     </script>
 </head>
 <body>
@@ -325,27 +381,30 @@
         </div>
 
         <div id="main">
-            <h2>User information</h2>
-            <div class="entry">
+            <h2 id="flip"><a style="cursor: pointer; color: black;" id="info">User Information [show]</a></h2>
+            <div class="entry" id="panel">
                 <div class="navbar-custom">
                     <ul>
-                        <li>Name: </li>
-                        <li>Age: </li>
-                        <li>Mobile phone: </li>
-                        <li>Email: </li>
+                        <li>Name: <span id="name"></span></li>
+                        <li>Age: <span id="age"></span></li>
+                        <li>Mobile phone: <span id="phone"></span></li>
+                        <li>Email: <span id="email"></span></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div id="main">
-            <h2>Users online</h2>
-            <div class="navbar-custom">
-                <ul>
-                    <li>First user info: </li>
-                    <li>Second user info: </li>
-                    <li>Third user info: </li>
-                </ul>
+        <div id="main2">
+            <h2 id="flip2"><a style="cursor: pointer; color: black;" id="info2">Cookies [show]</a></h2>
+            <div class="entry" id="panel2">
+                <div class="navbar-custom">
+                    <ul>
+                        <li>Cookies1</li>
+                        <li>Cookies2</li>
+                        <li>Cookies3</li>
+                        <li>Cookies4</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

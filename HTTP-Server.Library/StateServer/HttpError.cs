@@ -3,35 +3,69 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+
 using HttpServer.Library.ResponseServer;
+using HttpServer.Library.MediatorClient;
 
 namespace HttpServer.Library.StateServer
 {
     public class HttpError : State
     {
-        public HttpError(Server server)
+        public HttpError()
+            : base()
         {
-            this.Server = server;
         }
 
-        protected override void GetResponse()
+        public HttpError(Mediator mediator)
+            : base(mediator)
         {
-            ResponseBuilder pageBuilder = new PageBuilder()
+        }
+
+        public override void SendResponse(int code)
+        {
+            string codeStr = code.ToString() + " " + ((HttpStatusCode)code).ToString();
+            Quote q = new Quote();
+
+            string html = "<html>" +
+                                "<body>" +
+                                    "<h1>" + codeStr + "</h1>" +
+                                    "<h3>Quote of the day</h3>" +
+                                    "<blockquote><h3><i>" + q.GetQuote() + "</i></h3></blockquote>" +
+                                    "<h3>Черномырдин Виктор Степанович</h3>" +
+                                 "</body>" +
+                           "</html>";
+
+            ResponseBuilder builder = new PageBuilder()
             {
                 Response = new Response()
                 {
                     AddressFamily = System.Net.Sockets.AddressFamily.InterNetwork,
                     IsConnected = true,
-                    ContentLength = 120,
-                    StatusDesc = this.Server.State.DescriptionState,
+                    Html = html,
+                    ContentLength = html.Length,
+                    StatusDesc = ((HttpStatusCode)code).ToString(),
                     ContentType = "text/html",
-                    StatusCode = this.Server.State.CodeState,
+                    StatusCode = code,
                     Charset = System.Text.Encoding.UTF8,
                     DateTimeResponse = DateTime.Now,
                     ProtocolType = System.Net.Sockets.ProtocolType.Tcp
                 }
             };
-           this.Response = pageBuilder.CreateResponse();
+
+            string str = builder.CreateResponse();
+
+            // Приведем строку к виду массива байт
+            byte[] buffer = Encoding.UTF8.GetBytes(str);
+            // Отправим его клиенту
+            this._mediator.Client.GetStream().Write(buffer, 0, buffer.Length);
+            // Закроем соединение
+            this._mediator.Client.Close();
+        }
+
+        public override void SendResponse()
+        {
+            throw new NotImplementedException();
         }
 
         protected override void ChangeState(Server server)
