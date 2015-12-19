@@ -13,6 +13,7 @@ namespace HttpServer.Library.ClientLogic
         
         private System.Windows.Threading.DispatcherTimer dispatcherTimer;
         private TimeSpan timerInterval = new TimeSpan(0, 0, 30);
+        private EventHandler ResetTokenEvent;
 
         private string _tokenString = string.Empty;
         public string TokenString
@@ -26,12 +27,13 @@ namespace HttpServer.Library.ClientLogic
         }
 
         public delegate void DispatcherTokenTimer();
-        public event DispatcherTokenTimer OnResetToken;
+        //public event DispatcherTokenTimer OnResetToken;
 
         public Token()
         {
             this.InitializeTimer();
             this._tokenString = this.GenerateToken(10);
+            ResetTokenEvent = new EventHandler(OnResetToken);
         }
 
         private void InitializeEvent()
@@ -51,10 +53,15 @@ namespace HttpServer.Library.ClientLogic
         {
             this._tokenString = null;
 
-            OnResetToken();
+            OnResetToken(null,null);
 
             dispatcherTimer.Stop();
             dispatcherTimer.Interval = new TimeSpan();
+        }
+
+        private void OnResetToken(object param, EventArgs e)
+        {
+            Console.WriteLine("Token changed");
         }
 
         private string GenerateToken(int size)

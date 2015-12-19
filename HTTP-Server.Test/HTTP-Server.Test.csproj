@@ -72,7 +72,7 @@
     <Compile Include="TestQuote.cs" />
     <Compile Include="TestWeather.cs" />
     <Compile Include="TestIp.cs" />
-    <Compile Include="TestFactoryMethod.cs" />
+    <Compile Include="TestRouting.cs" />
     <Compile Include="TestAjax.cs" />
     <Compile Include="TestToken.cs" />
   </ItemGroup>

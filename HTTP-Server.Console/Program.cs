@@ -15,7 +15,7 @@ namespace HttpServer.Console
 
             System.Console.WriteLine(token.TokenString);
 
-            System.Threading.Thread.Sleep(new TimeSpan(0, 1, 0));
+            System.Threading.Thread.Sleep(new TimeSpan(0, 0, 30));
 
             System.Console.WriteLine(token.TokenString);
 

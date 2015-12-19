@@ -16,10 +16,14 @@ namespace HttpServer.Library.RouteFolder
             { 1, "getWeather" },
             { 2, "getIp" },
             { 3, "getJson" },
-            { 4, "logIn" },
-            { 5, "registration" },
-            { 6, "newUser" },
-            { 7, "signIn" }
+
+            { 4, "registration" },
+            { 5, "registrationFail" },
+            { 6, "registrationTrue" },
+            
+            { 7, "logIn" },
+            { 8, "logInFail" },
+            { 9, "logInTrue" }
         };
 
         public Route()
@@ -33,9 +37,8 @@ namespace HttpServer.Library.RouteFolder
             {
                 string[] newRoute = this.Parse(route);
                 Client = client;
-                Value = newRoute[2];
                 this.Action = newRoute[1];
-                
+                Value = newRoute[2];
 
                 this.FindRoute();
             }
@@ -50,7 +53,6 @@ namespace HttpServer.Library.RouteFolder
         public static string Value { get; set; }
         public string Action { get; set; }
         public bool IsRouting { get; set; }
-
 
         public void Send(string path)
         {
@@ -68,13 +70,19 @@ namespace HttpServer.Library.RouteFolder
                 case "logIn":
                     new LogInRoute().SendResponse();
                     break;
+                case "logInFail":
+                    new RegistrationRoute().SendResponse();
+                    break;
+                case "logInTrue":
+                    new RegistrationRoute().SendResponse();
+                    break;
                 case "registration":
                     new RegistrationRoute().SendResponse();
                     break;
-                case "newUser":
-                    new LogInRoute().SendResponse();
+                case "registrationFail":
+                    new RegistrationRoute().SendResponse();
                     break;
-                case "signIn":
+                case "registrationTrue":
                     new RegistrationRoute().SendResponse();
                     break;
                 default:

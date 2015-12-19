@@ -15,6 +15,7 @@ using HttpServer.Library.RouteFolder;
 using HttpServer.Library.StateServer;
 using HttpServer.Library.MediatorClient;
 using HttpServer.Library.ClientLogic;
+using HttpServer.Library.JsonParsing;
 
 namespace HttpServer.Library
 {
@@ -29,14 +30,16 @@ namespace HttpServer.Library
         #region Fields
         private Log _logger;
         private Route _route;
-        private FileStream fileStream;
+        private JsonManager _jsonManager;
+        private FileStream _fileStream;
         private Mediator _mediator;
         private State _stateError;
         private User _user;
 
-        private string request;
-        private byte[] buffer;
-        private int count;
+        private string _contentType;
+        private string _request;
+        private byte[] _buffer;
+        private int _count;
         #endregion
 
         #region Constructor
@@ -45,23 +48,17 @@ namespace HttpServer.Library
         {
             this.Initialize(client);
 
-            while ((this.count = client.GetStream().Read(this.buffer, 0, this.buffer.Length)) > 0)
+            while ((this._count = client.GetStream().Read(this._buffer, 0, this._buffer.Length)) > 0)
             {
-                this.request += Encoding.ASCII.GetString(this.buffer, 0, this.count);
-                if (this.request.IndexOf("\r\n\r\n") >= 0 || this.request.Length > 4096)
+                this._request += Encoding.ASCII.GetString(this._buffer, 0, this._count);
+                if (this._request.IndexOf("\r\n\r\n") >= 0 || this._request.Length > 4096)
                     break;
             }
-            
+
             // CHECK COOKIES FOR USER INSTANCE -------------
-
-            // Парсим строку запроса с использованием регулярных выражений
-            // При этом отсекаем все переменные GET-запроса
-            Match reqMatch = Regex.Match(this.request, @"^\w+\s+([^\s\?]+)[^\s]*\s+HTTP/.*|");
-
-            if(this.request.IsJson())
-            {
-                _user = _user.RegistrationUser(this.request);
-            }
+            #region Parsing request string 
+            // Парсим строку запроса с использованием регулярных выражений. При этом отсекаем все переменные GET-запроса
+            Match reqMatch = Regex.Match(this._request, @"^\w+\s+([^\s\?]+)[^\s]*\s+HTTP/.*|");
 
             if (reqMatch == Match.Empty)
             {
@@ -70,22 +67,36 @@ namespace HttpServer.Library
                 this.SendError(client, 400);
                 return;
             }
-            // Получаем строку запроса
-            string requestUri = reqMatch.Groups[1].Value;
+            string requestUri = reqMatch.Groups[1].Value; // Получаем строку запроса
+            #endregion
 
-            // **********************Routing URL**********************
+            #region Parsing Json
+            if (this._request.IsJson())
+            {
+                this._jsonManager = new JsonManager(this._request, client);
+                this._jsonManager.Manage();
+
+                //_user = _user.ParseUser(this._request);
+
+                return;
+            }
+            #endregion
+
+            #region Routing URL
             this._route = new Route(requestUri, client);
-            // The object is deleted by carabidge collector if not using this if statment
-            if (this._route.IsRouting == true)
+            // The object is deleted by carabidge collector if not using this if statment and not return 
+            if (this._route.IsRouting == true) 
             {
                 // Detected what is query and create a response to client
                 this._route.Send(this._route.Action);
                 return;
             }
-            // Приводим ее к изначальному виду, преобразуя экранированные символы
-            // Например, "%20" -> " "
+            #endregion
+
+            // Приводим ее к изначальному виду, преобразуя экранированные символы. Например, "%20" -> " "
             requestUri = Uri.UnescapeDataString(requestUri);
 
+            #region Error like 'http://example.com/../../file.txt'
             // Если в строке содержится двоеточие, передадим ошибку 400
             // Это нужно для защиты от URL типа http://example.com/../../file.txt
             if (requestUri.IndexOf("..") >= 0)
@@ -95,11 +106,13 @@ namespace HttpServer.Library
                 this.SendError(client, 400);
                 return;
             }
+            #endregion
+
             // Если строка запроса оканчивается на "/", то добавим к ней index.html
             if (requestUri.EndsWith("/"))
                 requestUri += "index.html";
 
-            // Find the path of the directory then website is hosting
+            #region Find the path of the directory where website is hosting
             string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
             string _pathToFolder = wanted_path + "\\Website" + requestUri;
 
@@ -111,13 +124,9 @@ namespace HttpServer.Library
                 //this.SendError(client, 404);
                 return;
             }
-            // Получаем расширение файла из строки запроса
-            string extension = requestUri.Substring(requestUri.LastIndexOf('.'));
-            string contentType = this.DetectTypeByExtension(extension);
-
             try
             {
-                this.fileStream = new FileStream(_pathToFolder, FileMode.Open, FileAccess.Read, FileShare.Read);
+                this._fileStream = new FileStream(_pathToFolder, FileMode.Open, FileAccess.Read, FileShare.Read);
             }
             catch (Exception)
             {
@@ -126,23 +135,13 @@ namespace HttpServer.Library
                 this.SendError(client, 500);
                 return;
             }
-            // Посылаем заголовки
-            string headers = "HTTP/1.1 200 OK\nContent-Type: " + contentType + "\nContent-Length: " + this.fileStream.Length + "\n\n";
-            byte[] headersBuffer = Encoding.ASCII.GetBytes(headers);
-            client.GetStream().Write(headersBuffer, 0, headersBuffer.Length);
+            #endregion
 
-            // this._logger.WriteMessage(client, 200);
-            // Пока не достигнут конец файла
-            while (this.fileStream.Position < this.fileStream.Length)
-            {
-                // Читаем данные из файла
-                this.count = this.fileStream.Read(this.buffer, 0, this.buffer.Length);
-                // И передаем их клиенту
-                client.GetStream().Write(this.buffer, 0, this.count);
-            }
-            // Закроем файл и соединение
-            this.fileStream.Close();
-            client.Close();
+            // Получаем расширение файла из строки запроса
+            string extension = requestUri.Substring(requestUri.LastIndexOf('.'));
+            _contentType = this.DetectTypeByExtension(extension);
+
+            this.SendResponse(client);
         }
         #endregion
 
@@ -188,6 +187,10 @@ namespace HttpServer.Library
         }
 
         #region Server Methods
+        /// <summary>
+        /// Initizliae 
+        /// </summary>
+        /// <param name="client"></param>
         private void Initialize(TcpClient client)
         {
             // Initialize classes
@@ -200,10 +203,15 @@ namespace HttpServer.Library
             this._logger = new ResponseLogger("ResponseLogger");
 
             // Initialize varianles
-            this.request = string.Empty;
-            this.buffer = new byte[2048]; //1024
+            this._request = string.Empty;
+            this._buffer = new byte[2048]; //1024
         }
 
+        /// <summary>
+        /// Detect the type of extension
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <returns></returns>
         private string DetectTypeByExtension(string extension)
         {
             // Тип содержимого
@@ -230,6 +238,31 @@ namespace HttpServer.Library
                     else
                         return contentType = "application/unknown";
             }
+        }
+
+        /// <summary>
+        /// Send headers to web site
+        /// </summary>
+        /// <param name="client"></param>
+        private void SendResponse(TcpClient client)
+        {
+            // Посылаем заголовки
+            string headers = "HTTP/1.1 200 OK\nContent-Type: " + _contentType + "\nContent-Length: " + this._fileStream.Length + "\n\n";
+            byte[] headersBuffer = Encoding.ASCII.GetBytes(headers);
+            client.GetStream().Write(headersBuffer, 0, headersBuffer.Length);
+
+            // this._logger.WriteMessage(client, 200);
+            // Пока не достигнут конец файла
+            while (this._fileStream.Position < this._fileStream.Length)
+            {
+                // Читаем данные из файла
+                this._count = this._fileStream.Read(this._buffer, 0, this._buffer.Length);
+                // И передаем их клиенту
+                client.GetStream().Write(this._buffer, 0, this._count);
+            }
+            // Закроем файл и соединение
+            this._fileStream.Close();
+            client.Close();
         }
         #endregion
 

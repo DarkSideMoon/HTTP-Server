@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+using HttpServer.Library.Other;
 
 namespace HttpServer.Library.ClientLogic
 {
@@ -14,11 +15,13 @@ namespace HttpServer.Library.ClientLogic
         private static List<User> _usersInSystem = new List<User>();
         private static List<User> _banUsers = new List<User>();
 
+        private User _user;
 
         public User()
         {
         }
 
+        public TypeJsonRequest TypeRequest { get; set; }
         public Token MyToken { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -31,12 +34,10 @@ namespace HttpServer.Library.ClientLogic
             get { return _usersInSystem; }
         }
 
-        public User RegistrationUser(string input)
+        public User ParseUser(string input)
         {
             string[] lines = input.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
             string js = lines[13].Trim();
-
-            string resultJs = js.Remove(0, 1).Remove(js.Length - 2, 1);
             dynamic json = (JArray)JsonConvert.DeserializeObject(js);
 
             // 5 items in array 
@@ -48,19 +49,34 @@ namespace HttpServer.Library.ClientLogic
             // {"name":"phone","value":"+380123122132"},
             // {"name":"password","value":"123456"}]
 
-            User user = new User()
+            // Parse json from registration form 
+            try
             {
-                Name = json[0]["value"],
-                Age = json[1]["value"],
-                Email = json[2]["value"],
-                Phone = json[3]["value"],
-                Password = json[4]["value"],
-                
-                MyToken = new Token()
-            };
-            _usersInSystem.Add(user);
+                _user = new User()
+                {
+                    Name = json[0]["value"],
+                    Age = json[1]["value"],
+                    Email = json[2]["value"],
+                    Phone = json[3]["value"],
+                    Password = json[4]["value"],
 
-            return user;
+                    MyToken = new Token()
+                };
+                _usersInSystem.Add(_user);
+                this.TypeRequest = TypeJsonRequest.Registration;
+            }
+            catch (ArgumentOutOfRangeException) // Parse json from log in form 
+            {
+                _user = new User()
+                {
+                    Email = json[0]["value"],
+                    Password = json[1]["value"],
+
+                    MyToken = new Token()
+                };
+                this.TypeRequest = TypeJsonRequest.LogIn;
+            }
+            return _user;
         }
 
         public bool LogIn(string input)
@@ -75,6 +91,20 @@ namespace HttpServer.Library.ClientLogic
                     return true;
                 }
             return false;
+        }
+
+        public bool IsExist()
+        {
+            bool res = false;
+            _usersInSystem.ForEach(user =>
+            {
+                if (this.Email == user.Email &&
+                    this.Password == user.Password &&
+                     this.Phone == user.Phone &&
+                      this.Name == user.Name)
+                    res = true;
+            });
+            return res;
         }
     }
 }

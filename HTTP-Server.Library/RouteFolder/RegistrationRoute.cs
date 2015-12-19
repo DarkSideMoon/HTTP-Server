@@ -11,6 +11,9 @@ namespace HttpServer.Library.RouteFolder
 {
     public class RegistrationRoute : Route
     {
+        private string _registrationTrue = "registrationTrue";
+        private string _registrationFalse = "registrationFail";
+
         public RegistrationRoute(string path, TcpClient client)
             : base(path, client)
         {
@@ -23,8 +26,16 @@ namespace HttpServer.Library.RouteFolder
 
         protected override void SendResponse()
         {
+            string _pathToFolder = string.Empty;
             string _path = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-            string _pathToFolder = _path + "\\Website\\Pages\\Registration.html";
+
+            // Detect the type to return value
+            if (base.Action == _registrationTrue)
+                _pathToFolder = _path + "\\Website\\Pages\\NewUser.html";
+            else if (base.Action == _registrationFalse)
+                _pathToFolder = _path + "\\Website\\Pages\\ErrorPages\\notRegistered.html";
+            
+            _pathToFolder = _path + "\\Website\\Pages\\Registration.html";
             string htmlPage = string.Empty;
 
             using (System.IO.StreamReader reader = new System.IO.StreamReader(_pathToFolder))

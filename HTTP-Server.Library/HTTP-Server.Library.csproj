@@ -66,9 +66,11 @@
     <Compile Include="FactoryMethod\XmlFormat.cs" />
     <Compile Include="IpConfig\IpConfig.cs" />
     <Compile Include="IpConfig\IpInfoData.cs" />
+    <Compile Include="JsonParsing\JsonManager.cs" />
     <Compile Include="MediatorClient\ClientMediator.cs" />
     <Compile Include="MediatorClient\Mediator.cs" />
-    <Compile Include="Quote.cs" />
+    <Compile Include="Other\Quote.cs" />
+    <Compile Include="Other\ServerEnums.cs" />
     <Compile Include="ResponseServerBuilder\JsonBuilder.cs" />
     <Compile Include="ResponseServerBuilder\PageBuilder.cs" />
     <Compile Include="ResponseServerBuilder\Response.cs" />

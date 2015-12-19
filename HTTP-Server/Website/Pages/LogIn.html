@@ -116,47 +116,48 @@ input {
     <script type="text/javascript" src="../Scripts/jquery-2.1.4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $("#sumbit").click(function () {
-                var user = new Object();
-                user.email = $("#email").val();
-                user.password = $("#password").val();
+            $("#logIn").submit(function (e) {
+                e.preventDefault();
 
-                alert("New user is entered!");
-                
+                var dataToSend = JSON.stringify($('#logIn').serializeArray());
+
+                // AJSX START -----------------
                 $.ajax({
                     type: "POST",
-                    url: "http://127.0.0.1",
-                    data: $("#logIn").serializeArray() ,// "{ 'Email' : '" + user.email + "', 'Password' : '" + user.password + "' }"
+                    url: "http://127.0.0.1/logIn/",
+                    data: dataToSend,
+
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function () { alert("Send!"); }
+                })
+                .done(function () {
+                    alert('Log in!');
+                })
+                .fail(function () {
+                    alert("Error! Something goes worng!");
                 });
-
-                $.post('http://127.0.0.1', user, function () {
-                    console.log(user.email);
-                    console.log(user.password);
-                    console.log("------------------------");
-                    console.log($("#logIn").serializeArray());
-                    console.log("------------------------");
-                    console.log(JSON.stringify($('#logIn').serializeArray()));
-                });
-                //window.location.replace("http://127.0.0.1"); -- redirect on other page
-                
+                // AJAX END -------------------
             });
         });
     </script>
 
 </head>
 <body>
-	<div id="login">
+	<div id="login"> <!-- start login -->
 		<h2><span class="fontawesome-lock"></span>Sign In</h2>
 		<form id="logIn" action="javascript:void(0);" method="POST">
 			<fieldset>
 				<p><label for="email">E-mail address</label></p>
-				<p><input type="email" id="email" name="email" value="mail@address.com" onBlur="if(this.value=='')this.value='mail@address.com'" onFocus="if(this.value=='mail@address.com')this.value=''"></p> <!-- JS because of IE support; better: placeholder="mail@address.com" -->
+				<p><input type="email" id="email" name="email" value="mail@address.com" 
+                          onBlur="if(this.value=='')this.value='mail@address.com'" 
+                          onFocus="if(this.value=='mail@address.com')this.value=''"></p> 
+                <!-- JS because of IE support; better: placeholder="mail@address.com" -->
 
 				<p><label for="password">Password</label></p>
-				<p><input type="password" id="password" name="password" value="password" onBlur="if(this.value=='')this.value='password'" onFocus="if(this.value=='password')this.value=''"></p> <!-- JS because of IE support; better: placeholder="password" -->
+				<p><input type="password" id="password" name="password" value="password" 
+                          onBlur="if(this.value=='')this.value='password'" 
+                          onFocus="if(this.value=='password')this.value=''"></p> 
+                <!-- JS because of IE support; better: placeholder="password" -->
 
 				<p><input type="submit" id="sumbit" value="Sign In"></p>
 			</fieldset>

@@ -12,6 +12,9 @@ namespace HttpServer.Library.RouteFolder
 {
     public class LogInRoute : Route
     {
+        private string _logInTrue = "logInTrue";
+        private string _logInFalse = "logInFail";
+
         public LogInRoute(string path, TcpClient client)
             : base(path, client)
         {
@@ -29,8 +32,16 @@ namespace HttpServer.Library.RouteFolder
 
         protected override void SendResponse()
         {
+            string _pathToFolder = string.Empty;
             string _path = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-            string _pathToFolder = _path + "\\Website\\Pages\\LogIn.html";
+            
+            // Detect the type to return value
+            if(this.Action == _logInTrue)
+                _pathToFolder = _path + "\\Website\\Pages\\Main.html";
+            else if(this.Action == _logInFalse)
+                _pathToFolder = _path + "\\Website\\Pages\\ErrorPages\\logInError.html";
+
+            _pathToFolder = _path + "\\Website\\Pages\\LogIn.html";
             string htmlPage = string.Empty;
 
             using (System.IO.StreamReader reader = new System.IO.StreamReader(_pathToFolder))

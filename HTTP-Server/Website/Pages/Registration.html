@@ -131,34 +131,22 @@
 
                 var dataToSend = JSON.stringify($('#regist').serializeArray());
 
+                // AJSX START -----------------
                 $.ajax({
                     type: "POST",
                     url: "http://127.0.0.1/newUser/",
                     data: dataToSend,
-                            
+
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function () {
-                        if (!Notification) {
-                            alert('Desktop notifications not available in your browser. Try Chromium.');
-                            return;
-                        }
-
-                        if (Notification.permission !== "granted")
-                            Notification.requestPermission();
-                        else {
-                            var notification = new Notification('Hello !!!', {
-                                icon: 'http://127.0.0.1/Images/Adrin.png',
-                                body: "Hey there! You've been notified that registrated on server!",
-                            });
-
-                            notification.onclick = function () {
-                                window.open("http://127.0.0.1");
-                            };
-
-                        }
-                    }
+                })
+                .done(function () {
+                    alert('New user is registed!');
+                })
+                .fail(function () {
+                    alert("Error! Something goes worng!");
                 });
+                // AJAX END -------------------
             });
         });
 
@@ -179,11 +167,9 @@
                 notification.onclick = function () {
                     window.open("http://127.0.0.1");
                 };
-
             }
         }
     </script>
-
 </head>
 
 <body>

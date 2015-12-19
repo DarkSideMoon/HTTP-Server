@@ -185,12 +185,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Website\Pages\ErrorPages\expiredSession.html" />
-    <Content Include="Website\Pages\ErrorPages\notAuthorized.html" />
+    <Content Include="Website\Pages\ErrorPages\notRegistered.html" />
     <Content Include="Website\Pages\ErrorPages\pageNotFound.html" />
     <Content Include="Website\Pages\ErrorPages\serverError.html" />
-    <Content Include="Website\Pages\ErrorPages\validationError.html" />
+    <Content Include="Website\Pages\ErrorPages\logInError.html" />
     <Content Include="Website\Pages\LogIn.html" />
     <Content Include="Website\Pages\Main.html" />
+    <Content Include="Website\Pages\NewUser.html" />
     <Content Include="Website\Pages\Registration.html" />
     <Content Include="Website\Scripts\jquery-2.1.4.min.js" />
     <Content Include="Website\Styles\SimplePageStyle.css" />

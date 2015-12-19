@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Adrin server</title>
+    <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background: #EFEFEF url(../Images/main-bg.jpg) repeat;
+            font-family: 'Arvo', serif;
+            font-size: 14px;
+            color: #000000;
+        }
+
+        span {
+            color: #83003E;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            padding: 0;
+            font-weight: normal;
+            color: #221D1D;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 2.4em;
+        }
+
+        h3 {
+            font-size: 1.6em;
+        }
+
+        p, ul, ol {
+            margin-top: 0;
+            line-height: 180%;
+        }
+
+        ul, ol {
+        }
+
+/* List */
+        #header {
+            width: 940px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        #logo {
+            width: 960px;
+            height: 150px;
+            margin: 0px auto 30px auto;
+            color: #000000;
+        }
+
+            #logo h1, #logo p {
+                margin: 0;
+                padding: 0;
+            }
+
+            #logo h1 {
+                line-height: 150px;
+                letter-spacing: -1px;
+                text-align: center;
+                text-transform: lowercase;
+                font-size: 3.8em;
+            }
+
+            #logo p {
+                float: left;
+                margin: 0;
+                padding: 26px 0 0 10px;
+                text-align: center;
+                color: #000000;
+            }
+
+                #logo p a {
+                    color: #000000;
+                }
+
+            #logo a {
+                border: none;
+                background: none;
+                text-decoration: none;
+                color: #000000;
+            }
+
+        /* Page */
+
+        #page {
+            overflow: hidden;
+            width: 940px;
+            margin: 0px auto;
+            padding: 30px 30px;
+            background: #FFFFFF;
+            border: 1px solid #D4D4D4;
+        }
+
+        #welcome {
+            width: 1000px;
+            margin: 0px auto;
+            padding: 10px 0px;
+        }
+
+            #welcome h2 {
+                padding: 0px 0px 20px 0px;
+            }
+
+                #welcome h2 a {
+                    color: #000000;
+                }
+
+            #welcome a {
+                color: #000000;
+            }
+
+        #banner {
+            overflow: hidden;
+            width: 1000px;
+            margin: 0px auto;
+            padding: 30px 0px;
+            border-top: 1px solid #D4D4D4;
+            border-bottom: 1px solid #D4D4D4;
+        }
+    </style>
+
+    <script type="text/javascript" src="../Scripts/jquery-2.1.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            
+            var user = new Object();
+            user.name = 'Pasha';
+            user.age = 19;
+            user.phone = '1231234';
+            user.email = 'shark@i.ua';
+
+            document.getElementById("name").innerHTML = user.name;
+            document.getElementById("age").innerHTML = user.age;
+            document.getElementById("phone").innerHTML = user.phone;
+            document.getElementById("email").innerHTML = user.email;
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <div id="logo">
+                <h1><a href="#">Adrin server</a></h1>
+            </div>
+        </div>
+        <div id="banner">
+            <img src="../Images/Adrin.png" align="right" alt="альтернативный текст">
+            <div id="welcome">
+                <h2 class="title">New user is registed</h2>
+                <h3 class="title"><a href="/logIn/">Sign In</a></h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
