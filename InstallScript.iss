@@ -4,11 +4,10 @@
                                           
 #define Dir "..\HTTP-Server\HTTP-Server\bin\Release"
 #define Path "..\HTTP-Server\HTTP-Server\bin\Release\HttpServer.exe"
-#define Name GetStringFileInfo(Path, "ProductName")
+#define Name "HttpServer"
 #define ExeName Name + ".exe"     
 #define AppVersion GetFileVersion(Path)
 #define URL "https://github.com/DarkSideMoon"
-#define Name "HttpServer"
 #define Publisher "Pavel Romashchenko"
 #define AppVersion "1.0.1.0"
 
