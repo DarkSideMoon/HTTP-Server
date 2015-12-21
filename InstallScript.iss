@@ -51,8 +51,8 @@ SolidCompression=yes
 ;------------------------------------------------------------------------------
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"; LicenseFile: "D:\GitHub\HTTP-Server\HTTP-Server\External\Install\License_ENG.txt"
-Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"; LicenseFile: "D:\GitHub\HTTP-Server\HTTP-Server\External\Install\License_RUS.txt"
+Name: "english"; MessagesFile: "compiler:Default.isl"; LicenseFile: "External\Install\License_ENG.txt"
+Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"; LicenseFile: "External\Install\License_RUS.txt"
 ;------------------------------------------------------------------------------
 ;   Опционально - некоторые задачи, которые надо выполнить при установке
 ;------------------------------------------------------------------------------
