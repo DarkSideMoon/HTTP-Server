@@ -40,7 +40,7 @@ OutputDir=..\http-server\HTTP-Server\bin\
 OutputBaseFileName=Installation
 
 ; Файл иконки
-SetupIconFile=D:\GitHub\Media\web.ico
+SetupIconFile=External\Install\web.ico
 
 ; Параметры сжатия
 Compression=lzma
