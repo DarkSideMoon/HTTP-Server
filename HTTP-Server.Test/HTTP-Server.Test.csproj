@@ -75,7 +75,6 @@
     <Compile Include="TestIp.cs" />
     <Compile Include="TestRouting.cs" />
     <Compile Include="TestAjax.cs" />
-    <Compile Include="TestToken.cs" />
     <Compile Include="TestComposite.cs" />
   </ItemGroup>
   <ItemGroup>
