@@ -36,7 +36,7 @@ DefaultDirName={pf}\{#Name}
 DefaultGroupName={#Name}
 
 ; Каталог, куда будет записан собранный setup и имя исполняемого файла
-OutputDir=D:\GitHub\Installation
+OutputDir=..\http-server\HTTP-Server\bin\
 OutputBaseFileName=Installation
 
 ; Файл иконки
