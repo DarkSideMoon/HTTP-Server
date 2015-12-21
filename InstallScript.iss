@@ -67,13 +67,11 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 ; Исполняемый файл
-Source: "D:\GitHub\HTTP-Server\HTTP-Server\bin\Release\HttpServer.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#Path}"; DestDir: "{app}"; Flags: ignoreversion
 
 ; Прилагающиеся ресурсы
-Source: "D:\GitHub\HTTP-Server\HTTP-Server\bin\Release*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#Dir}*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-; .NET Framework 4.0
-Source: "D:\GitHub\InstallationScripts\dotNetFx45_Full_setup.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall; Check: not IsRequiredDotNetDetected
 
 ;------------------------------------------------------------------------------
 ;   Указываем установщику, где он должен взять иконки
