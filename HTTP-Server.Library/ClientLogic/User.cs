@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Text.RegularExpressions;
 using HttpServer.Library.Other;
 
 namespace HttpServer.Library.ClientLogic
@@ -21,6 +21,7 @@ namespace HttpServer.Library.ClientLogic
         {
         }
 
+        public static User CurrentUser { get; set; }
         public TypeJsonRequest TypeRequest { get; set; }
         public Token MyToken { get; set; }
         public string Email { get; set; }
@@ -40,19 +41,19 @@ namespace HttpServer.Library.ClientLogic
             string js = lines[13].Trim();
             dynamic json = (JArray)JsonConvert.DeserializeObject(js);
 
-            // 5 items in array 
-            // Value 
-            // Name 
+            // 5 items in array
+            // Value
+            // Name
             // [{"name":"name","value":"Pasha"},
             // {"name":"age","value":"19"},
             // {"name":"email","value":"shark00235@i.ua"},
             // {"name":"phone","value":"+380123122132"},
             // {"name":"password","value":"123456"}]
 
-            // Parse json from registration form 
+            // Parse json from registration form
             try
             {
-                _user = new User()
+                this._user = new User()
                 {
                     Name = json[0]["value"],
                     Age = json[1]["value"],
@@ -62,27 +63,34 @@ namespace HttpServer.Library.ClientLogic
 
                     MyToken = new Token()
                 };
-                _usersInSystem.Add(_user);
+                _usersInSystem.Add(this._user);
+                CurrentUser = this._user;
+
                 this.TypeRequest = TypeJsonRequest.Registration;
             }
-            catch (ArgumentOutOfRangeException) // Parse json from log in form 
+            catch (ArgumentOutOfRangeException)
             {
-                _user = new User()
+                // Parse json from log in form
+                this._user = new User()
                 {
                     Email = json[0]["value"],
                     Password = json[1]["value"],
 
                     MyToken = new Token()
                 };
+
+                CurrentUser = this.FindUserByEmail(this._user.Email);
                 this.TypeRequest = TypeJsonRequest.LogIn;
             }
-            return _user;
+            return this._user;
         }
 
         public bool LogIn(string input)
         {
-            if(this.MyToken.TokenString == input)
+            if (this.MyToken.TokenString == input)
+            {
                 return true;
+            }
 
             foreach (var item in _usersInSystem)
                 if (item.Name == input && item.Password == input)
@@ -96,15 +104,35 @@ namespace HttpServer.Library.ClientLogic
         public bool IsExist()
         {
             bool res = false;
-            _usersInSystem.ForEach(user =>
+            //_usersInSystem.ForEach(user =>
+            //{
+            //});
+            // null
+            foreach (User user in _usersInSystem)
             {
-                if (this.Email == user.Email &&
-                    this.Password == user.Password &&
-                     this.Phone == user.Phone &&
-                      this.Name == user.Name)
+                if (CurrentUser.Email == user.Email &&
+                    CurrentUser.Password == user.Password &&
+                     CurrentUser.Phone == user.Phone &&
+                      CurrentUser.Name == user.Name)
                     res = true;
-            });
+            }
             return res;
+        }
+
+        public User FindUserByEmail(string email)
+        {
+            foreach (User user in _usersInSystem)
+                if (user.Email == email)
+                    return new User()
+                    {
+                        Name = user.Name,
+                        Age = user.Age,
+                        Email = email,
+                        Password = user.Password,
+                        Phone = user.Phone,
+                        MyToken = user.MyToken
+                    };
+            return new User();
         }
     }
 }

@@ -11,7 +11,6 @@ namespace HttpServer.Test
         public void TestMyToken()
         {
             Token token = new Token();
-            
             //System.Threading.Thread.Sleep(new TimeSpan(0, 1, 30));
 
 

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 using HttpServer.Library.ClientLogic;
 using HttpServer.Library.Other;
-using System.Net.Sockets;
 using HttpServer.Library.RouteFolder;
 
 namespace HttpServer.Library.JsonParsing
@@ -17,42 +17,41 @@ namespace HttpServer.Library.JsonParsing
         private Route _route;
 
         /// <summary>
-        /// Constructor to detect type of json request 
+        /// Constructor to detect type of json request
         /// </summary>
         /// <param name="input">Input json</param>
         public JsonManager(string input, TcpClient client)
         {
             try
             {
-                _client = client;
-                _user = new User(); 
-                _user.ParseUser(input);
+                this._client = client;
+                this._user = new User();
+                this._user.ParseUser(input);
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
 
         public void Manage()
         {
-            switch (_user.TypeRequest)
+            switch (this._user.TypeRequest)
             {
                 case TypeJsonRequest.Registration:
                     {
-                        _route = _user.IsExist() ?
-                            new Route("/registrationFail/", this._client) : new Route("/registrationFail/", this._client);
-                        _route.Send(_route.Action);
+                        this._route = !this._user.IsExist() ?
+                            new Route("/registrationTrue/", this._client) : new Route("/registrationFail/", this._client);
+                        this._route.Send(this._route.Action);
                     }
-                    break;
+                    return;
                 case TypeJsonRequest.LogIn:
                     {
-                        _route = _user.IsExist() ?
+                        this._route = this._user.IsExist() ?
                                 new Route("/logInTrue/", this._client) : new Route("/logInFail/", this._client);
-                        _route.Send(_route.Action);
+                        this._route.Send(this._route.Action);
                     }
-                    break;
+                    return;
                 default:
                     break;
             }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HttpServer.Library.MediatorClient;
 
 namespace HttpServer.Library
 {
@@ -15,21 +14,10 @@ namespace HttpServer.Library
         protected internal string _descState; // description of the state http server
         protected internal string _response;
 
-        protected Mediator _mediator; // The part of mediator pattern
-
         public State()
         {
         }
 
-        /// <summary>
-        /// Constructor for pattern mediator
-        /// To connect client side and the errors
-        /// </summary>
-        /// <param name="mediator"></param>
-        public State(Mediator mediator)
-        {
-            this._mediator = mediator;
-        }
 
         public Server MyServer
         {

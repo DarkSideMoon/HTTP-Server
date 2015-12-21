@@ -45,15 +45,14 @@ namespace HttpServer.Library
             string[] lines = ajaxReques.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
 
             try
-            { 
+            {
                 input = lines[13].Trim();
             }
             catch (IndexOutOfRangeException)
             {
                 return false;
-            } 
-            return input.StartsWith("{") && input.EndsWith("}")
-                   || input.StartsWith("[") && input.EndsWith("]");
+            }
+            return (input.StartsWith("{") && input.EndsWith("}")) || (input.StartsWith("[") && input.EndsWith("]"));
         }
 
         #region Unuseful

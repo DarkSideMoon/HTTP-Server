@@ -33,6 +33,11 @@ namespace HttpServer.Library
             this._listener = new TcpListener(IPAddress.Any, port);
             this._listener.Start();
 
+            // **************************** Start Initialize searcher of folders ****************************
+
+
+
+            // **************************** End Initialize searcher of folders ****************************
             this.SetConsoleColor(ConsoleColor.Yellow);
             Console.WriteLine("The server is starting...");
             Console.WriteLine("Listening on http://127.0.0.1:" + port);
@@ -57,7 +62,7 @@ namespace HttpServer.Library
             // Start new thread with getting client
             //thread.Start(client);
 
-            //thread.Join(); handlers tornado  
+            //thread.Join(); handlers tornado
         }
 
         // Остановка сервера

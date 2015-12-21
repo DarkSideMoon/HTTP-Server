@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Net;
 
 using HttpServer.Library.ResponseServer;
-using HttpServer.Library.MediatorClient;
 
 namespace HttpServer.Library.StateServer
 {
@@ -17,10 +16,6 @@ namespace HttpServer.Library.StateServer
         {
         }
 
-        public HttpError(Mediator mediator)
-            : base(mediator)
-        {
-        }
 
         public override void SendResponse(int code)
         {
@@ -58,9 +53,9 @@ namespace HttpServer.Library.StateServer
             // Приведем строку к виду массива байт
             byte[] buffer = Encoding.UTF8.GetBytes(str);
             // Отправим его клиенту
-            this._mediator.Client.GetStream().Write(buffer, 0, buffer.Length);
+            // this.Client.GetStream().Write(buffer, 0, buffer.Length);
             // Закроем соединение
-            this._mediator.Client.Close();
+            // this.Client.Close();
         }
 
         public override void SendResponse()

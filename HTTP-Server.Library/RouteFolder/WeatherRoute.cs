@@ -83,9 +83,9 @@ namespace HttpServer.Library.RouteFolder
             // Приведем строку к виду массива байт
             byte[] buffer = Encoding.UTF8.GetBytes(str);
             // Отправим его клиенту
-            Route.Client.GetStream().Write(buffer, 0, buffer.Length);
+            this.Client.GetStream().Write(buffer, 0, buffer.Length);
             // Закроем соединение
-            Route.Client.Close();
+            this.Client.Close();
         }
 
         protected override void SendJson()
@@ -105,9 +105,9 @@ namespace HttpServer.Library.RouteFolder
             try
             {
                 // Отправим его клиенту
-                Route.Client.GetStream().Write(buffer, 0, buffer.Length);
+                this.Client.GetStream().Write(buffer, 0, buffer.Length);
                 // Закроем соединение
-                Route.Client.Close();
+                this.Client.Close();
             }
             catch (Exception)
             {

@@ -58,6 +58,10 @@
     <Compile Include="Client.cs" />
     <Compile Include="ClientLogic\Token.cs" />
     <Compile Include="ClientLogic\User.cs" />
+    <Compile Include="Composite\Composite.cs" />
+    <Compile Include="Composite\MenuElement.cs" />
+    <Compile Include="Composite\MainPage.cs" />
+    <Compile Include="Composite\Page.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
     <Compile Include="FactoryMethod\FormatManager.cs" />
     <Compile Include="FactoryMethod\Format.cs" />
@@ -67,8 +71,12 @@
     <Compile Include="IpConfig\IpConfig.cs" />
     <Compile Include="IpConfig\IpInfoData.cs" />
     <Compile Include="JsonParsing\JsonManager.cs" />
-    <Compile Include="MediatorClient\ClientMediator.cs" />
-    <Compile Include="MediatorClient\Mediator.cs" />
+    <Compile Include="MediatorClient\AbstractDB.cs" />
+    <Compile Include="MediatorClient\MyClient.cs" />
+    <Compile Include="MediatorClient\DesktopClient.cs" />
+    <Compile Include="MediatorClient\MobileClient.cs" />
+    <Compile Include="MediatorClient\MyDB.cs" />
+    <Compile Include="MediatorClient\WebClient.cs" />
     <Compile Include="Other\Quote.cs" />
     <Compile Include="Other\ServerEnums.cs" />
     <Compile Include="ResponseServerBuilder\JsonBuilder.cs" />
@@ -92,6 +100,7 @@
     <Compile Include="StateServer\State.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="MediatorClient\MediatorPattern.cd" />
     <None Include="FactoryMethod\FactoryMethodDiagramm1.cd" />
     <None Include="packages.config" />
     <None Include="ResponseServerBuilder\BuilderClassDiagram.cd" />

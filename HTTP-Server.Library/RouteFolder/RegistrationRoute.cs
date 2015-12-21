@@ -30,12 +30,13 @@ namespace HttpServer.Library.RouteFolder
             string _path = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
 
             // Detect the type to return value
-            if (base.Action == _registrationTrue)
+            if (this.Action == _registrationTrue)
                 _pathToFolder = _path + "\\Website\\Pages\\NewUser.html";
-            else if (base.Action == _registrationFalse)
+            else if (this.Action == _registrationFalse)
                 _pathToFolder = _path + "\\Website\\Pages\\ErrorPages\\notRegistered.html";
-            
-            _pathToFolder = _path + "\\Website\\Pages\\Registration.html";
+            else
+                _pathToFolder = _path + "\\Website\\Pages\\Registration.html";
+
             string htmlPage = string.Empty;
 
             using (System.IO.StreamReader reader = new System.IO.StreamReader(_pathToFolder))
@@ -64,9 +65,9 @@ namespace HttpServer.Library.RouteFolder
             // Приведем строку к виду массива байт
             byte[] buffer = Encoding.UTF8.GetBytes(str);
             // Отправим его клиенту
-            Route.Client.GetStream().Write(buffer, 0, buffer.Length);
+            this.Client.GetStream().Write(buffer, 0, buffer.Length);
             // Закроем соединение
-            Route.Client.Close();
+            this.Client.Close();
         }
     }
 }

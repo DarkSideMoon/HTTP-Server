@@ -13,7 +13,6 @@ using HttpServer.Library.Logger;
 using HttpServer.Library.ResponseServer;
 using HttpServer.Library.RouteFolder;
 using HttpServer.Library.StateServer;
-using HttpServer.Library.MediatorClient;
 using HttpServer.Library.ClientLogic;
 using HttpServer.Library.JsonParsing;
 
@@ -24,6 +23,11 @@ namespace HttpServer.Library
     // Authentication Basic Digest
     // Cookies authentication
     // Give the permanent time to auth
+
+    // Search engine of folder
+    // Log in
+    // Check in
+    // Pattern
     #endregion
     public class Client
     {
@@ -32,8 +36,6 @@ namespace HttpServer.Library
         private Route _route;
         private JsonManager _jsonManager;
         private FileStream _fileStream;
-        private Mediator _mediator;
-        private State _stateError;
         private User _user;
 
         private string _contentType;
@@ -55,8 +57,6 @@ namespace HttpServer.Library
                     break;
             }
 
-            // CHECK COOKIES FOR USER INSTANCE -------------
-            #region Parsing request string 
             // Парсим строку запроса с использованием регулярных выражений. При этом отсекаем все переменные GET-запроса
             Match reqMatch = Regex.Match(this._request, @"^\w+\s+([^\s\?]+)[^\s]*\s+HTTP/.*|");
 
@@ -68,35 +68,26 @@ namespace HttpServer.Library
                 return;
             }
             string requestUri = reqMatch.Groups[1].Value; // Получаем строку запроса
-            #endregion
 
-            #region Parsing Json
             if (this._request.IsJson())
             {
                 this._jsonManager = new JsonManager(this._request, client);
                 this._jsonManager.Manage();
-
-                //_user = _user.ParseUser(this._request);
-
                 return;
             }
-            #endregion
 
-            #region Routing URL
             this._route = new Route(requestUri, client);
-            // The object is deleted by carabidge collector if not using this if statment and not return 
-            if (this._route.IsRouting == true) 
+            // The object is deleted by carabidge collector if not using this if statment and not return
+            if (this._route.IsRouting == true)
             {
                 // Detected what is query and create a response to client
                 this._route.Send(this._route.Action);
                 return;
             }
-            #endregion
 
             // Приводим ее к изначальному виду, преобразуя экранированные символы. Например, "%20" -> " "
             requestUri = Uri.UnescapeDataString(requestUri);
 
-            #region Error like 'http://example.com/../../file.txt'
             // Если в строке содержится двоеточие, передадим ошибку 400
             // Это нужно для защиты от URL типа http://example.com/../../file.txt
             if (requestUri.IndexOf("..") >= 0)
@@ -106,13 +97,11 @@ namespace HttpServer.Library
                 this.SendError(client, 400);
                 return;
             }
-            #endregion
 
             // Если строка запроса оканчивается на "/", то добавим к ней index.html
             if (requestUri.EndsWith("/"))
                 requestUri += "index.html";
 
-            #region Find the path of the directory where website is hosting
             string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
             string _pathToFolder = wanted_path + "\\Website" + requestUri;
 
@@ -120,8 +109,7 @@ namespace HttpServer.Library
             {
                 this.WriteConsoleMessage(client, 404);
                 //this._logger.WriteMessage(client, 404);
-                this._mediator.Send(404, this._stateError); // Null reference exception
-                //this.SendError(client, 404);
+                this.SendError(client, 404);
                 return;
             }
             try
@@ -135,11 +123,10 @@ namespace HttpServer.Library
                 this.SendError(client, 500);
                 return;
             }
-            #endregion
 
             // Получаем расширение файла из строки запроса
             string extension = requestUri.Substring(requestUri.LastIndexOf('.'));
-            _contentType = this.DetectTypeByExtension(extension);
+            this._contentType = this.DetectTypeByExtension(extension);
 
             this.SendResponse(client);
         }
@@ -188,17 +175,13 @@ namespace HttpServer.Library
 
         #region Server Methods
         /// <summary>
-        /// Initizliae 
+        /// Initialize
         /// </summary>
         /// <param name="client"></param>
         private void Initialize(TcpClient client)
         {
             // Initialize classes
             this._user = new User();
-
-            this._mediator = new ClientMediator();
-            this._mediator.Client = client;
-            this._stateError = new HttpError(this._mediator);
 
             this._logger = new ResponseLogger("ResponseLogger");
 
@@ -247,7 +230,8 @@ namespace HttpServer.Library
         private void SendResponse(TcpClient client)
         {
             // Посылаем заголовки
-            string headers = "HTTP/1.1 200 OK\nContent-Type: " + _contentType + "\nContent-Length: " + this._fileStream.Length + "\n\n";
+            string headers = "HTTP/1.1 200 OK\nContent-Type: " + this._contentType + "\nContent-Length: "
+                + this._fileStream.Length + "\n\n";
             byte[] headersBuffer = Encoding.ASCII.GetBytes(headers);
             client.GetStream().Write(headersBuffer, 0, headersBuffer.Length);
 
@@ -273,6 +257,13 @@ namespace HttpServer.Library
             Console.WriteLine("Error! Client: " + client.Client.LocalEndPoint.ToString() + " error numb: " + errorNumb);
             this.ResetConsoleColor();
         }
+        private void WriteConsoleMessage(string message, ConsoleColor color)
+        {
+            this.SetConsoleColor(color);
+            Console.WriteLine(message);
+            this.ResetConsoleColor();
+        }
+
         private void SetConsoleColor(ConsoleColor color)
         {
             Console.ForegroundColor = color;

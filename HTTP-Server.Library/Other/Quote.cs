@@ -50,10 +50,9 @@ namespace HttpServer.Library
             {
                 using (FileStream stream = new FileStream(this._fileLocation + "\\" + this._fileName, FileMode.Open, FileAccess.Read))
                 {
-                    using (StreamReader _reader = new StreamReader(stream))
-                    {
-                        this._allQuotes = _reader.ReadToEnd();
-                    }
+                    StreamReader _reader = new StreamReader(stream);
+                    this._allQuotes = _reader.ReadToEnd();
+                    _reader.Close();
                 }
             }
             catch (ObjectDisposedException ex)

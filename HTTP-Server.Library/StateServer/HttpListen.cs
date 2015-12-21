@@ -4,17 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HttpServer.Library.ResponseServer;
-using HttpServer.Library.MediatorClient;
 
 namespace HttpServer.Library.StateServer
 {
     public class HttpListen : State
     {
-        public HttpListen(Mediator mediator)
-            : base(mediator)
-        {
-        }
-
         public override void SendResponse()
         {
             ResponseBuilder pageBuilder = new PageBuilder()
@@ -37,9 +31,9 @@ namespace HttpServer.Library.StateServer
             // Приведем строку к виду массива байт
             byte[] buffer = Encoding.UTF8.GetBytes(this.Response);
             // Отправим его клиенту
-            this._mediator.Client.GetStream().Write(buffer, 0, buffer.Length);
+            //this._mediator.Client.GetStream().Write(buffer, 0, buffer.Length);
             // Закроем соединение
-            this._mediator.Client.Close();
+            //this._mediator.Client.Close();
         }
 
         public override void SendResponse(int code)

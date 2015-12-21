@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Net.Sockets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HttpServer.Library.RouteFolder;
-using System.Net.Sockets;
 
 namespace HttpServer.Test
 {

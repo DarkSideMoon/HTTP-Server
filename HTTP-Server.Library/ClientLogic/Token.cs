@@ -10,30 +10,29 @@ namespace HttpServer.Library.ClientLogic
     public class Token
     {
         private static Random random = new Random((int)DateTime.Now.Ticks);
-        
         private System.Windows.Threading.DispatcherTimer dispatcherTimer;
         private TimeSpan timerInterval = new TimeSpan(0, 0, 30);
-        private EventHandler ResetTokenEvent;
+        private EventHandler resetTokenEvent;
 
         private string _tokenString = string.Empty;
-        public string TokenString
-        {
-            get { return _tokenString; }
-        }
-
-        public long GetDuration
-        {
-            get { return dispatcherTimer.Interval.Ticks; }
-        }
-
-        public delegate void DispatcherTokenTimer();
-        //public event DispatcherTokenTimer OnResetToken;
 
         public Token()
         {
             this.InitializeTimer();
             this._tokenString = this.GenerateToken(10);
-            ResetTokenEvent = new EventHandler(OnResetToken);
+            this.resetTokenEvent = new EventHandler(this.OnResetToken);
+        }
+
+        public delegate void DispatcherTokenTimer();
+
+        public string TokenString
+        {
+            get { return this._tokenString; }
+        }
+
+        public long GetDuration
+        {
+            get { return this.dispatcherTimer.Interval.Ticks; }
         }
 
         private void InitializeEvent()
@@ -43,20 +42,20 @@ namespace HttpServer.Library.ClientLogic
 
         private void InitializeTimer()
         {
-            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(ResetToken);
-            dispatcherTimer.Interval = this.timerInterval;
-            dispatcherTimer.Start();
+            this.dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            this.dispatcherTimer.Tick += new EventHandler(this.ResetToken);
+            this.dispatcherTimer.Interval = this.timerInterval;
+            this.dispatcherTimer.Start();
         }
 
         private void ResetToken(object sender, EventArgs e)
         {
             this._tokenString = null;
 
-            OnResetToken(null,null);
+            this.OnResetToken(null, null);
 
-            dispatcherTimer.Stop();
-            dispatcherTimer.Interval = new TimeSpan();
+            this.dispatcherTimer.Stop();
+            this.dispatcherTimer.Interval = new TimeSpan();
         }
 
         private void OnResetToken(object param, EventArgs e)
@@ -70,7 +69,7 @@ namespace HttpServer.Library.ClientLogic
             char ch;
             for (int i = 0; i < size; i++)
             {
-                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor((26 * random.NextDouble()) + 65)));
                 builder.Append(ch);
             }
 

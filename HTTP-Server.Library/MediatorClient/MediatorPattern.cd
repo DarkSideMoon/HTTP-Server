@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="HttpServer.Library.MediatorClient.AbstractDB&lt;T&gt;" Collapsed="true">
+    <Position X="1" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAEAAAAAAAAAgAAEAAEAogAAAIBAAAAA=</HashCode>
+      <FileName>MediatorClient\AbstractDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HttpServer.Library.MediatorClient.DesktopClient" Collapsed="true">
+    <Position X="4.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MediatorClient\DesktopClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HttpServer.Library.MediatorClient.MobileClient" Collapsed="true">
+    <Position X="1.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MediatorClient\MobileClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HttpServer.Library.MediatorClient.MyClient" Collapsed="true">
+    <Position X="4.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MediatorClient\MyClient.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AbstractDB" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HttpServer.Library.MediatorClient.MyDB&lt;T&gt;" Collapsed="true">
+    <Position X="4.75" Y="1.25" Width="1.5" />
+    <AssociationLine Name="WebClient" Type="HttpServer.Library.MediatorClient.WebClient" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.5" Y="1.941" />
+        <Point X="5.5" Y="2.316" />
+        <Point X="8.75" Y="2.316" />
+        <Point X="8.75" Y="3" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="MobileClient" Type="HttpServer.Library.MediatorClient.MobileClient" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.5" Y="1.941" />
+        <Point X="5.5" Y="2.316" />
+        <Point X="2.906" Y="2.316" />
+        <Point X="2.906" Y="3" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAIAAAAAAAAEA=</HashCode>
+      <FileName>MediatorClient\MyDB.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DesktopClient" />
+      <Property Name="WebClient" />
+      <Property Name="MobileClient" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HttpServer.Library.MediatorClient.WebClient" Collapsed="true">
+    <Position X="8" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MediatorClient\WebClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="HttpServer.Library.MediatorClient.TypeDB" Collapsed="true">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAACAAA=</HashCode>
+      <FileName>MediatorClient\AbstractDB.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

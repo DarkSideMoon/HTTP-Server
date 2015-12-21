@@ -16,11 +16,9 @@ namespace HttpServer.Library.RouteFolder
             { 1, "getWeather" },
             { 2, "getIp" },
             { 3, "getJson" },
-
             { 4, "registration" },
             { 5, "registrationFail" },
             { 6, "registrationTrue" },
-            
             { 7, "logIn" },
             { 8, "logInFail" },
             { 9, "logInTrue" }
@@ -32,11 +30,12 @@ namespace HttpServer.Library.RouteFolder
 
         public Route(string route, TcpClient client)
         {
-            AllRoute = route;
+            StaticClient = client;
+            this.AllRoute = route;
             try
             {
                 string[] newRoute = this.Parse(route);
-                Client = client;
+                this.Client = client;
                 this.Action = newRoute[1];
                 Value = newRoute[2];
 
@@ -47,10 +46,10 @@ namespace HttpServer.Library.RouteFolder
                 return;
             }
         }
-
-        public static string AllRoute { get; set; }
-        public static TcpClient Client { get; set; }
         public static string Value { get; set; }
+        public static TcpClient StaticClient { get; set; }
+        public string AllRoute { get; set; }
+        public TcpClient Client { get; set; }
         public string Action { get; set; }
         public bool IsRouting { get; set; }
 
@@ -59,31 +58,32 @@ namespace HttpServer.Library.RouteFolder
             switch (path)
             {
                 case "getIp":
-                    new IpRoute().SendResponse();
+                    new IpRoute(this.AllRoute, this.Client).SendResponse();
                     break;
                 case "getWeather":
-                    new WeatherRoute().SendResponse();
+                    new WeatherRoute(this.AllRoute, this.Client).SendResponse();
                     break;
                 case "getJson":
-                    new WeatherRoute().SendJson();
+                    new WeatherRoute(this.AllRoute, this.Client).SendJson();
                     break;
+
                 case "logIn":
-                    new LogInRoute().SendResponse();
+                    new LogInRoute(this.AllRoute, this.Client).SendResponse();
                     break;
                 case "logInFail":
-                    new RegistrationRoute().SendResponse();
+                    new LogInRoute(this.AllRoute, this.Client).SendResponse();
                     break;
                 case "logInTrue":
-                    new RegistrationRoute().SendResponse();
+                    new LogInRoute(this.AllRoute, this.Client).SendResponse();
                     break;
                 case "registration":
-                    new RegistrationRoute().SendResponse();
+                    new RegistrationRoute(this.AllRoute, this.Client).SendResponse();
                     break;
                 case "registrationFail":
-                    new RegistrationRoute().SendResponse();
+                    new RegistrationRoute(this.AllRoute, this.Client).SendResponse();
                     break;
                 case "registrationTrue":
-                    new RegistrationRoute().SendResponse();
+                    new RegistrationRoute(this.AllRoute, this.Client).SendResponse();
                     break;
                 default:
                     return;

@@ -134,7 +134,7 @@
                 // AJSX START -----------------
                 $.ajax({
                     type: "POST",
-                    url: "http://127.0.0.1/newUser/",
+                    url: "http://127.0.0.1/registration/",
                     data: dataToSend,
 
                     contentType: "application/json; charset=utf-8",
@@ -145,7 +145,8 @@
                 })
                 .fail(function () {
                     alert("Error! Something goes worng!");
-                });
+                })
+                ;
                 // AJAX END -------------------
             });
         });

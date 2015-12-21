@@ -8,7 +8,7 @@ namespace HttpServer.Library.Other
 {
     public enum TypeJsonRequest
     {
-        Registration = 1,
-        LogIn = 2
-    };
+        Registration,
+        LogIn
+    }
 }
